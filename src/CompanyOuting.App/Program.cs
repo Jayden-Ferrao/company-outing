@@ -1,4 +1,5 @@
 using CompanyOuting.App.Client.Pages;
+using CompanyOuting.App.Client.Services;
 using CompanyOuting.App.Components;
 using MudBlazor.Services;
 
@@ -10,6 +11,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveWebAssemblyComponents();
 
 builder.Services.AddMudServices();
+builder.Services.AddScoped<UserSessionService>();
 
 var app = builder.Build();
 

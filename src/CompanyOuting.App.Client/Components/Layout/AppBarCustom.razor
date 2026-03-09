@@ -1,4 +1,10 @@
 @using MudBlazor
+@rendermode InteractiveServer
+@implements IDisposable
+
+@inject IJSRuntime JsRuntime
+@inject NavigationManager Navigation
+@inject UserSessionService Session
 
 <MudAppBar Elevation="0" Fixed="true" Class="px-12 site-header" Style="background-color: white !important; border-bottom: 1px solid rgba(0,0,0,0.06);">
     @* Logo Section *@
@@ -20,19 +26,70 @@
     <div class="d-none d-lg-flex gap-10 align-center">
         <MudLink Href="/about" Class="nav-item-link">ABOUT</MudLink>
         <MudLink Href="/marketplace" Class="nav-item-link">BROWSE EXPERIENCES</MudLink>
-        <MudLink Href="/account" Class="nav-item-link">MY ACCOUNT</MudLink>
     </div>
 
     <MudSpacer />
 
     @* Action Buttons *@
     <div class="d-flex gap-4 align-center">
-        <MudButton Variant="Variant.Outlined" Class="header-btn-rect px-8 py-3" Href="/create">CREATE EXPERIENCE</MudButton>
-        <MudButton Variant="Variant.Outlined" Class="header-btn-pill px-8 py-3" Href="/login">PROVIDER LOGIN</MudButton>
+        @if (IsProviderContext)
+        {
+            <MudButton Variant="Variant.Outlined" Class="header-btn-rect px-8 py-3" Href="/provider/create">CREATE EXPERIENCE</MudButton>
+            <MudButton Variant="Variant.Outlined" Class="header-btn-pill px-8 py-3" OnClick="SignOut">SIGN OUT</MudButton>
+        }
+        else
+        {
+            <MudButton Variant="Variant.Outlined" Class="header-btn-pill px-8 py-3" Href="/login">PROVIDER LOGIN</MudButton>
+        }
     </div>
 </MudAppBar>
 
-@inject NavigationManager Navigation
+@code {
+    private bool _sessionLoaded;
+
+    protected override void OnInitialized()
+    {
+        Session.Changed += HandleSessionChanged;
+        Navigation.LocationChanged += HandleLocationChanged;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender || _sessionLoaded)
+        {
+            return;
+        }
+
+        await Session.EnsureLoadedAsync(JsRuntime);
+        _sessionLoaded = true;
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private void HandleSessionChanged()
+    {
+        InvokeAsync(StateHasChanged);
+    }
+
+    private void HandleLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        InvokeAsync(StateHasChanged);
+    }
+
+    private bool IsProviderContext =>
+        Session.IsProvider || Navigation.ToBaseRelativePath(Navigation.Uri).StartsWith("provider/", StringComparison.OrdinalIgnoreCase);
+
+    private async Task SignOut()
+    {
+        await Session.SignOutAsync(JsRuntime);
+        Navigation.NavigateTo("/marketplace");
+    }
+
+    public void Dispose()
+    {
+        Session.Changed -= HandleSessionChanged;
+        Navigation.LocationChanged -= HandleLocationChanged;
+    }
+}
 
 <style>
     .site-header {

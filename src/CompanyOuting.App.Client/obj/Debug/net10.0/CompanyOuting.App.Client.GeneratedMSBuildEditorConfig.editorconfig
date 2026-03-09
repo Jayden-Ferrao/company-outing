@@ -111,6 +111,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9MYXlvdXQvQXBwQmFyQ3VzdG9tLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/jaydenkilowott/Desktop/company outing .net/company-outing/src/CompanyOuting.App.Client/Components/Layout/ProviderLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9MYXlvdXQvUHJvdmlkZXJMYXlvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/jaydenkilowott/Desktop/company outing .net/company-outing/src/CompanyOuting.App.Client/Pages/About.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQWJvdXQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
@@ -123,16 +127,44 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQ291bnRlci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/jaydenkilowott/Desktop/company outing .net/company-outing/src/CompanyOuting.App.Client/Pages/Create.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQ3JlYXRlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/jaydenkilowott/Desktop/company outing .net/company-outing/src/CompanyOuting.App.Client/Pages/Dashboard/Buyer/Index.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRGFzaGJvYXJkL0J1eWVyL0luZGV4LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/jaydenkilowott/Desktop/company outing .net/company-outing/src/CompanyOuting.App.Client/Pages/Dashboard/Provider/Bookings.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRGFzaGJvYXJkL1Byb3ZpZGVyL0Jvb2tpbmdzLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/jaydenkilowott/Desktop/company outing .net/company-outing/src/CompanyOuting.App.Client/Pages/Dashboard/Provider/Index.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRGFzaGJvYXJkL1Byb3ZpZGVyL0luZGV4LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/jaydenkilowott/Desktop/company outing .net/company-outing/src/CompanyOuting.App.Client/Pages/Dashboard/Provider/Packages.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRGFzaGJvYXJkL1Byb3ZpZGVyL1BhY2thZ2VzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/jaydenkilowott/Desktop/company outing .net/company-outing/src/CompanyOuting.App.Client/Pages/Dashboard/Provider/Settings.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRGFzaGJvYXJkL1Byb3ZpZGVyL1NldHRpbmdzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/jaydenkilowott/Desktop/company outing .net/company-outing/src/CompanyOuting.App.Client/Pages/Experience/Details.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRXhwZXJpZW5jZS9EZXRhaWxzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/jaydenkilowott/Desktop/company outing .net/company-outing/src/CompanyOuting.App.Client/Pages/Home.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvSG9tZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/jaydenkilowott/Desktop/company outing .net/company-outing/src/CompanyOuting.App.Client/Pages/Login.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvTG9naW4ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/jaydenkilowott/Desktop/company outing .net/company-outing/src/CompanyOuting.App.Client/Pages/Logout.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvTG9nb3V0LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/jaydenkilowott/Desktop/company outing .net/company-outing/src/CompanyOuting.App.Client/Pages/Marketplace/Index.razor]

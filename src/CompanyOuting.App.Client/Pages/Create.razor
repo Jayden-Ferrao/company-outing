@@ -1,0 +1,1084 @@
+@page "/create"
+@page "/provider/create"
+@layout CompanyOuting.App.Client.Components.Layout.ProviderLayout
+@rendermode InteractiveServer
+
+@using System.ComponentModel.DataAnnotations
+
+@inject IJSRuntime JsRuntime
+@inject NavigationManager Navigation
+@inject UserSessionService Session
+@inject ISnackbar Snackbar
+
+<PageTitle>Create Experience - Company Outing</PageTitle>
+
+@if (_isReady)
+{
+    <div class="create-exp-page">
+        <div class="create-exp-shell">
+            <header class="create-exp-header">
+                <h1>Create New Experience</h1>
+                <p>Step @_currentStep of 6</p>
+            </header>
+
+            <section class="create-stepper-card">
+                <div class="create-stepper">
+                    @foreach (var step in _steps)
+                    {
+                        <div class="create-stepper-item">
+                            <div class="create-stepper-circle @(step.Number <= _currentStep ? "is-active" : string.Empty)">@step.Number</div>
+                            <span class="create-stepper-label @(step.Number <= _currentStep ? "is-active" : string.Empty)">@step.Label</span>
+                            @if (step.Number < _steps.Count)
+                            {
+                                <span class="create-stepper-line @(step.Number < _currentStep ? "is-active" : string.Empty)"></span>
+                            }
+                        </div>
+                    }
+                </div>
+            </section>
+
+            <EditForm Model="_model" OnValidSubmit="HandleSubmit" class="create-exp-card">
+                <DataAnnotationsValidator />
+                <ValidationSummary class="create-exp-validation" />
+
+                @if (_currentStep == 1)
+                {
+                    <div class="create-exp-section-head">
+                        <h2>Basic Information</h2>
+                        <p>Start by providing the essential details about your experience.</p>
+                    </div>
+
+                    <div class="create-exp-divider"></div>
+
+                    <div class="create-exp-field">
+                        <label for="title">PACKAGE TITLE *</label>
+                        <InputText id="title" @bind-Value="_model.Title" class="create-exp-input" placeholder="e.g., Alpine Team Building Adventure" />
+                    </div>
+
+                    <div class="create-exp-field">
+                        <label for="shortDescription">SHORT DESCRIPTION *</label>
+                        <InputText id="shortDescription" @bind-Value="_model.ShortDescription" class="create-exp-input" placeholder="Brief one-line description (max 100 characters)" />
+                    </div>
+
+                    <div class="create-exp-field">
+                        <label for="fullDescription">FULL DESCRIPTION *</label>
+                        <InputTextArea id="fullDescription" @bind-Value="_model.FullDescription" class="create-exp-input create-exp-textarea" placeholder="Detailed description of your package..." />
+                    </div>
+
+                    <div class="create-exp-field">
+                        <label>CATEGORIES *</label>
+                        <div class="create-exp-check-grid">
+                            @foreach (var category in _categories)
+                            {
+                                <label class="create-exp-check-item">
+                                    <input type="checkbox" checked="@category.IsSelected" @onchange="@((ChangeEventArgs e) => category.IsSelected = e.Value as bool? == true)" />
+                                    <span>@category.Label</span>
+                                </label>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="create-exp-field">
+                        <label>AVAILABLE SEASONS *</label>
+                        <div class="create-exp-season-row">
+                            @foreach (var season in _seasons)
+                            {
+                                <label class="create-exp-check-item">
+                                    <input type="checkbox" checked="@season.IsSelected" @onchange="@((ChangeEventArgs e) => season.IsSelected = e.Value as bool? == true)" />
+                                    <span>@season.Label</span>
+                                </label>
+                            }
+                        </div>
+                    </div>
+                }
+
+                @if (_currentStep == 2)
+                {
+                    <div class="create-exp-section-head">
+                        <h2>Itinerary</h2>
+                        <p>Break down your experience day by day to help buyers understand the full schedule.</p>
+                    </div>
+
+                    <div class="create-exp-divider"></div>
+
+                    <div class="create-exp-field">
+                        <label>DAILY ACTIVITIES *</label>
+
+                        <div class="create-exp-day-list">
+                            @for (var i = 0; i < _model.ItineraryDays.Count; i++)
+                            {
+                                var day = _model.ItineraryDays[i];
+                                var dayNumber = i + 1;
+                                <div class="create-exp-day-row" @key="day">
+                                    <input value="@day.Description"
+                                           @oninput="@(e => UpdateDayDescription(day, e.Value?.ToString()))"
+                                           class="create-exp-input"
+                                           placeholder="@($"Day {dayNumber}: Activity description...")" />
+
+                                    @if (_model.ItineraryDays.Count > 1)
+                                    {
+                                        <button type="button" class="create-exp-delete-btn" @onclick="@(() => RemoveDay(i))">Delete</button>
+                                    }
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="create-exp-inline-actions">
+                        <button type="button" class="create-exp-outline-btn" @onclick="AddDay">+ Add Day</button>
+                    </div>
+                }
+
+                @if (_currentStep == 3)
+                {
+                    <div class="create-exp-section-head">
+                        <h2>Pricing & Capacity</h2>
+                        <p>Set your pricing structure and define the capacity for your experience.</p>
+                    </div>
+
+                    <div class="create-exp-divider"></div>
+
+                    <div class="create-exp-two-col">
+                        <div class="create-exp-field">
+                            <label for="price">PRICE PER PERSON ($) *</label>
+                            <InputNumber id="price" @bind-Value="_model.PricePerPerson" class="create-exp-input" />
+                        </div>
+
+                        <div class="create-exp-field">
+                            <label for="duration">DURATION *</label>
+                            <InputText id="duration" @bind-Value="_model.Duration" class="create-exp-input" placeholder="e.g., 3 days, 2 nights" />
+                        </div>
+
+                        <div class="create-exp-field">
+                            <label for="minimumCapacity">MINIMUM CAPACITY *</label>
+                            <InputNumber id="minimumCapacity" @bind-Value="_model.MinimumCapacity" class="create-exp-input" />
+                        </div>
+
+                        <div class="create-exp-field">
+                            <label for="maximumCapacity">MAXIMUM CAPACITY *</label>
+                            <InputNumber id="maximumCapacity" @bind-Value="_model.MaximumCapacity" class="create-exp-input" />
+                        </div>
+                    </div>
+
+                    <div class="create-exp-field">
+                        <label for="location">LOCATION *</label>
+                        <InputText id="location" @bind-Value="_model.Location" class="create-exp-input" placeholder="Select location" />
+                    </div>
+
+                    <div class="create-exp-field">
+                        <label for="included">WHAT'S INCLUDED *</label>
+                        <InputText id="included" @bind-Value="_model.IncludedItem" class="create-exp-input" placeholder="e.g., Professional guide, All equipment, Lunch & refreshments..." />
+                    </div>
+
+                    <div class="create-exp-inline-actions">
+                        <button type="button" class="create-exp-outline-btn">+ Add Item</button>
+                    </div>
+                }
+
+                @if (_currentStep == 4)
+                {
+                    <div class="create-exp-section-head">
+                        <h2>Rules & Booking Policies</h2>
+                        <p>Configure your booking requirements, payment structure, and cancellation policies.</p>
+                    </div>
+
+                    <div class="create-exp-divider"></div>
+
+                    <div class="create-exp-subsection">
+                        <h3>SECTION 1 - AVAILABILITY SETTINGS</h3>
+                    </div>
+
+                    <div class="create-exp-field">
+                        <label>BOOKING CONFIRMATION METHOD *</label>
+                        <div class="create-exp-radio-stack">
+                            <label class="create-exp-radio-card @( _model.AutoConfirmAfterDeposit ? "is-selected" : string.Empty)">
+                                <input type="radio" name="confirmationMethod" checked="@_model.AutoConfirmAfterDeposit" @onchange="@(() => _model.AutoConfirmAfterDeposit = true)" />
+                                <div>
+                                    <strong>Auto-confirm after deposit</strong>
+                                    <span>Bookings are automatically confirmed once the deposit is received.</span>
+                                </div>
+                            </label>
+                            <label class="create-exp-radio-card @(!_model.AutoConfirmAfterDeposit ? "is-selected" : string.Empty)">
+                                <input type="radio" name="confirmationMethod" checked="@(!_model.AutoConfirmAfterDeposit)" @onchange="@(() => _model.AutoConfirmAfterDeposit = false)" />
+                                <div>
+                                    <strong>Manual approval required</strong>
+                                    <span>You'll review and manually approve each booking request.</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="create-exp-field">
+                        <label>RESERVATION HOLD TIME *</label>
+                        <div class="create-exp-chip-row">
+                            @foreach (var holdTime in _holdTimes)
+                            {
+                                <button type="button" class="create-exp-chip @(holdTime == _model.ReservationHoldTime ? "is-active" : string.Empty)" @onclick="@(() => _model.ReservationHoldTime = holdTime)">@holdTime</button>
+                            }
+                            <InputText @bind-Value="_model.CustomHoldTime" class="create-exp-input create-exp-inline-input" placeholder="Custom hours" />
+                        </div>
+                        <p class="create-exp-helper">How long should a reservation be held before automatic cancellation?</p>
+                    </div>
+
+                    <div class="create-exp-subsection">
+                        <h3>SECTION 2 - PAYMENT STRUCTURE</h3>
+                    </div>
+
+                    <div class="create-exp-two-col">
+                        <div class="create-exp-field">
+                            <label for="depositPercentage">DEPOSIT REQUIRED (%) *</label>
+                            <InputNumber id="depositPercentage" @bind-Value="_model.DepositPercentage" class="create-exp-input" />
+                        </div>
+
+                        <div class="create-exp-field">
+                            <label for="remainingBalanceDays">REMAINING BALANCE DUE *</label>
+                            <InputText id="remainingBalanceDays" @bind-Value="_model.RemainingBalanceDays" class="create-exp-input" placeholder="14 days before" />
+                        </div>
+                    </div>
+
+                    <div class="create-exp-preview-box">
+                        <span>PAYMENT PREVIEW</span>
+                        <p>30% deposit required at booking. Remaining 70% due 14 days before the event.</p>
+                    </div>
+
+                    <div class="create-exp-subsection">
+                        <h3>SECTION 3 - CANCELLATION POLICY</h3>
+                    </div>
+
+                    <div class="create-exp-two-col">
+                        <div class="create-exp-field">
+                            <label for="freeCancellationUntil">FREE CANCELLATION UNTIL *</label>
+                            <InputText id="freeCancellationUntil" @bind-Value="_model.FreeCancellationUntil" class="create-exp-input" placeholder="30 days before" />
+                        </div>
+
+                        <div class="create-exp-field">
+                            <label for="cancellationFee">CANCELLATION FEE (%) *</label>
+                            <InputNumber id="cancellationFee" @bind-Value="_model.CancellationFeePercentage" class="create-exp-input" />
+                        </div>
+                    </div>
+
+                    <label class="create-exp-checkbox-card">
+                        <input type="checkbox" checked="@_model.EnableAutomaticCancellation" @onchange="@((ChangeEventArgs e) => _model.EnableAutomaticCancellation = e.Value as bool? == true)" />
+                        <div>
+                            <strong>Enable automatic cancellation for unpaid bookings</strong>
+                            <span>Bookings will be automatically cancelled if payment is not received within the specified timeframe.</span>
+                        </div>
+                    </label>
+
+                    <div class="create-exp-preview-box">
+                        <span>CANCELLATION PREVIEW</span>
+                        <p>Free cancellation up to 30 days before the event. After that, a 50% cancellation fee applies.</p>
+                    </div>
+
+                    <div class="create-exp-subsection">
+                        <h3>SECTION 4 - BOOKING RESTRICTIONS</h3>
+                    </div>
+
+                    <div class="create-exp-three-col">
+                        <div class="create-exp-field">
+                            <label for="minimumLeadTime">MIN. LEAD TIME *</label>
+                            <InputText id="minimumLeadTime" @bind-Value="_model.MinimumLeadTime" class="create-exp-input" placeholder="7 days" />
+                        </div>
+
+                        <div class="create-exp-field">
+                            <label for="minimumGroupSize">MIN. GROUP SIZE *</label>
+                            <InputNumber id="minimumGroupSize" @bind-Value="_model.MinimumGroupSize" class="create-exp-input" />
+                        </div>
+
+                        <div class="create-exp-field">
+                            <label for="maximumGroupSize">MAX. GROUP SIZE *</label>
+                            <InputNumber id="maximumGroupSize" @bind-Value="_model.MaximumGroupSize" class="create-exp-input" />
+                        </div>
+                    </div>
+
+                    <label class="create-exp-checkbox-card">
+                        <input type="checkbox" checked="@_model.RequireManualApprovalForAllBookings" @onchange="@((ChangeEventArgs e) => _model.RequireManualApprovalForAllBookings = e.Value as bool? == true)" />
+                        <div>
+                            <strong>Require manual approval for all bookings</strong>
+                            <span>You'll review and approve each booking regardless of the confirmation method selected above.</span>
+                        </div>
+                    </label>
+                }
+
+                @if (_currentStep == 5)
+                {
+                    <div class="create-exp-section-head">
+                        <h2>Media</h2>
+                        <p>Upload high-quality images and videos to showcase your experience.</p>
+                    </div>
+
+                    <div class="create-exp-divider"></div>
+
+                    <div class="create-exp-field">
+                        <label>PACKAGE IMAGES *</label>
+                        <p class="create-exp-helper create-exp-helper-tight">Upload at least 3 high-quality images</p>
+
+                        <div class="create-exp-upload-grid">
+                            @for (var imageIndex = 0; imageIndex < 4; imageIndex++)
+                            {
+                                <button type="button" class="create-exp-upload-tile">
+                                    <span class="create-exp-upload-icon">↑</span>
+                                    <span>Click to upload</span>
+                                </button>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="create-exp-field">
+                        <label for="videoUrl">VIDEO URL (OPTIONAL)</label>
+                        <InputText id="videoUrl" @bind-Value="_model.VideoUrl" class="create-exp-input" placeholder="https://youtube.com/watch?v=..." />
+                        <p class="create-exp-helper">YouTube or Vimeo links</p>
+                    </div>
+                }
+
+                @if (_currentStep == 6)
+                {
+                    <div class="create-exp-section-head">
+                        <h2>Review & Publish</h2>
+                        <p>Review your experience details before publishing it to the marketplace.</p>
+                    </div>
+
+                    <div class="create-exp-divider"></div>
+
+                    <div class="create-exp-review-grid">
+                        <section class="create-exp-review-card">
+                            <span>Basic Info</span>
+                            <h3>@(_model.Title.Length > 0 ? _model.Title : "Untitled experience")</h3>
+                            <p>@(_model.ShortDescription.Length > 0 ? _model.ShortDescription : "No short description added yet.")</p>
+                            <small>@(_model.FullDescription.Length > 0 ? _model.FullDescription : "No full description added yet.")</small>
+                        </section>
+
+                        <section class="create-exp-review-card">
+                            <span>Itinerary</span>
+                            <h3>Daily Activities</h3>
+                            <p>@(_model.ItineraryDays.Any(day => !string.IsNullOrWhiteSpace(day.Description)) ? string.Join(" | ", _model.ItineraryDays.Where(day => !string.IsNullOrWhiteSpace(day.Description)).Select(day => day.Description)) : "No itinerary details added yet.")</p>
+                        </section>
+
+                        <section class="create-exp-review-card">
+                            <span>Pricing</span>
+                            <h3>$@_model.PricePerPerson / person</h3>
+                            <p>@(_model.Duration.Length > 0 ? _model.Duration : "Duration pending")</p>
+                            <small>@_model.MinimumCapacity - @_model.MaximumCapacity guests · @(_model.Location.Length > 0 ? _model.Location : "Location pending")</small>
+                        </section>
+
+                        <section class="create-exp-review-card">
+                            <span>Booking Rules</span>
+                            <h3>@(_model.AutoConfirmAfterDeposit ? "Auto-confirm after deposit" : "Manual approval required")</h3>
+                            <p>@_model.DepositPercentage% deposit · @_model.RemainingBalanceDays</p>
+                            <small>Free cancellation: @_model.FreeCancellationUntil · Fee: @_model.CancellationFeePercentage%</small>
+                        </section>
+
+                        <section class="create-exp-review-card">
+                            <span>Media</span>
+                            <h3>4 upload slots ready</h3>
+                            <p>@(_model.VideoUrl.Length > 0 ? _model.VideoUrl : "No video link added")</p>
+                        </section>
+
+                        <section class="create-exp-review-card">
+                            <span>Ready to Publish</span>
+                            <h3>Marketplace visibility</h3>
+                            <p>Your experience will appear in the provider package list after publishing.</p>
+                            <small>You can edit it later from My Packages.</small>
+                        </section>
+                    </div>
+                }
+
+                <div class="create-exp-divider"></div>
+
+                <div class="create-exp-actions">
+                    <button type="button" class="create-exp-secondary" @onclick="GoPrevious">@(_currentStep == 1 ? "Previous" : "Previous")</button>
+                    <button type="submit" class="create-exp-primary">@(_currentStep == 6 ? "Publish Experience" : "Next Step")</button>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+}
+
+@code {
+    private readonly CreateExperienceModel _model = new();
+    private bool _isReady;
+    private int _currentStep = 1;
+
+    private readonly List<CreateStep> _steps =
+    [
+        new(1, "Basic Info"),
+        new(2, "Itinerary"),
+        new(3, "Pricing"),
+        new(4, "Rules & Booking Policies"),
+        new(5, "Media"),
+        new(6, "Review & Publish")
+    ];
+
+    private readonly List<string> _holdTimes = ["12h", "24h", "48h"];
+
+    private readonly List<SelectOption> _categories =
+    [
+        new("Team Building"),
+        new("Adventure"),
+        new("Conference"),
+        new("Workshop"),
+        new("Culinary"),
+        new("Tech"),
+        new("Leadership"),
+        new("Wellness"),
+        new("Cultural"),
+        new("Innovation"),
+        new("Outdoor"),
+        new("Luxury"),
+        new("Sustainability")
+    ];
+
+    private readonly List<SelectOption> _seasons =
+    [
+        new("All Year"),
+        new("Spring"),
+        new("Summer"),
+        new("Fall"),
+        new("Winter")
+    ];
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+        {
+            return;
+        }
+
+        await Session.EnsureLoadedAsync(JsRuntime);
+
+        if (!Session.IsProvider)
+        {
+            Navigation.NavigateTo("/login");
+            return;
+        }
+
+        _isReady = true;
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private void HandleSubmit()
+    {
+        if (_currentStep < 6)
+        {
+            _currentStep++;
+            return;
+        }
+
+        Snackbar.Add("Experience published successfully.", Severity.Success);
+        Navigation.NavigateTo("/dashboard/packages");
+    }
+
+    private void GoPrevious()
+    {
+        if (_currentStep == 1)
+        {
+            Navigation.NavigateTo("/dashboard/packages");
+            return;
+        }
+
+        _currentStep--;
+    }
+
+    private sealed class CreateExperienceModel
+    {
+        [Required]
+        public string Title { get; set; } = string.Empty;
+
+        [Required]
+        public string ShortDescription { get; set; } = string.Empty;
+
+        [Required]
+        public string FullDescription { get; set; } = string.Empty;
+
+        public List<ItineraryDay> ItineraryDays { get; set; } = [ new() ];
+        public decimal PricePerPerson { get; set; } = 850;
+        public string Duration { get; set; } = string.Empty;
+        public int MinimumCapacity { get; set; } = 15;
+        public int MaximumCapacity { get; set; } = 200;
+        public string Location { get; set; } = string.Empty;
+        public string IncludedItem { get; set; } = string.Empty;
+        public bool AutoConfirmAfterDeposit { get; set; } = true;
+        public string ReservationHoldTime { get; set; } = "24h";
+        public string CustomHoldTime { get; set; } = string.Empty;
+        public int DepositPercentage { get; set; } = 30;
+        public string RemainingBalanceDays { get; set; } = "14 days before";
+        public string FreeCancellationUntil { get; set; } = "30 days before";
+        public int CancellationFeePercentage { get; set; } = 50;
+        public bool EnableAutomaticCancellation { get; set; }
+        public string MinimumLeadTime { get; set; } = "7 days";
+        public int MinimumGroupSize { get; set; } = 10;
+        public int MaximumGroupSize { get; set; } = 500;
+        public bool RequireManualApprovalForAllBookings { get; set; }
+        public string VideoUrl { get; set; } = string.Empty;
+    }
+
+    private sealed class SelectOption(string label)
+    {
+        public string Label { get; } = label;
+        public bool IsSelected { get; set; }
+    }
+
+    private sealed class ItineraryDay
+    {
+        public string Description { get; set; } = string.Empty;
+    }
+
+    private sealed record CreateStep(int Number, string Label);
+
+    private void AddDay()
+    {
+        _model.ItineraryDays.Add(new ItineraryDay());
+    }
+
+    private void RemoveDay(int index)
+    {
+        if (_model.ItineraryDays.Count <= 1 || index < 0 || index >= _model.ItineraryDays.Count)
+        {
+            return;
+        }
+
+        _model.ItineraryDays.RemoveAt(index);
+    }
+
+    private static void UpdateDayDescription(ItineraryDay day, string? value)
+    {
+        day.Description = value ?? string.Empty;
+    }
+}
+
+<style>
+    .create-exp-page {
+        min-height: 100vh;
+        padding: 28px 20px 40px;
+        background: #eef2f6;
+    }
+
+    .create-exp-shell {
+        max-width: 1080px;
+        margin: 0 auto;
+    }
+
+    .create-exp-header {
+        margin-bottom: 22px;
+    }
+
+    .create-exp-header h1 {
+        margin: 0;
+        color: #0f172a;
+        font-size: clamp(2.8rem, 5vw, 4rem);
+        font-weight: 900;
+        letter-spacing: -1.8px;
+    }
+
+    .create-exp-header p {
+        margin: 10px 0 0;
+        color: #607089;
+        font-size: 1rem;
+    }
+
+    .create-stepper-card,
+    .create-exp-card {
+        padding: 28px 32px;
+        background: #ffffff;
+        border: 1px solid #d9e1ea;
+    }
+
+    .create-stepper-card {
+        margin-bottom: 26px;
+    }
+
+    .create-stepper {
+        display: grid;
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        gap: 12px;
+        align-items: start;
+    }
+
+    .create-stepper-item {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 14px;
+        text-align: center;
+    }
+
+    .create-stepper-circle {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        place-items: center;
+        width: 48px;
+        height: 48px;
+        border: 1px solid #d5deea;
+        color: #8b9ab0;
+        background: #fff;
+        font-size: 1.2rem;
+        font-weight: 800;
+    }
+
+    .create-stepper-circle.is-active {
+        background: #0b1739;
+        border-color: #0b1739;
+        color: #fff;
+    }
+
+    .create-stepper-label {
+        color: #8b9ab0;
+        font-size: 0.84rem;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+    }
+
+    .create-stepper-label.is-active {
+        color: #172033;
+    }
+
+    .create-stepper-line {
+        position: absolute;
+        top: 24px;
+        left: calc(50% + 34px);
+        width: calc(100% - 68px);
+        height: 1px;
+        background: #d5deea;
+    }
+
+    .create-stepper-line.is-active {
+        background: #0b1739;
+    }
+
+    .create-exp-section-head h2 {
+        margin: 0;
+        color: #172033;
+        font-size: 1.95rem;
+        font-weight: 800;
+        letter-spacing: -0.6px;
+    }
+
+    .create-exp-section-head p {
+        margin: 10px 0 0;
+        color: #607089;
+        font-size: 1rem;
+    }
+
+    .create-exp-subsection {
+        margin: 30px 0 20px;
+        padding-top: 8px;
+    }
+
+    .create-exp-subsection h3 {
+        margin: 0;
+        color: #172033;
+        font-size: 0.92rem;
+        font-weight: 900;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+
+    .create-exp-divider {
+        margin: 24px 0 28px;
+        height: 1px;
+        background: #d9e1ea;
+    }
+
+    .create-exp-validation {
+        margin-bottom: 18px;
+        color: #b91c1c;
+    }
+
+    .create-exp-field {
+        margin-bottom: 28px;
+    }
+
+    .create-exp-field label {
+        display: block;
+        margin-bottom: 12px;
+        color: #6d4f32;
+        font-size: 0.95rem;
+        font-weight: 900;
+        letter-spacing: 0.7px;
+    }
+
+    .create-exp-input {
+        width: 100%;
+        min-height: 48px;
+        padding: 12px 14px;
+        border: 1px solid #cbd5e1;
+        color: #946949;
+        background: #fff;
+        outline: none;
+        font-family: inherit;
+        font-size: 0.98rem;
+    }
+
+    .create-exp-textarea {
+        min-height: 138px;
+        resize: vertical;
+    }
+
+    .create-exp-two-col {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px 24px;
+    }
+
+    .create-exp-three-col {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 20px 24px;
+    }
+
+    .create-exp-check-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px 40px;
+    }
+
+    .create-exp-season-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 18px;
+    }
+
+    .create-exp-check-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        color: #6d4f32;
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .create-exp-check-item input {
+        width: 18px;
+        height: 18px;
+        margin: 0;
+        accent-color: #0b1739;
+    }
+
+    .create-exp-inline-actions {
+        margin-top: -8px;
+        margin-bottom: 18px;
+    }
+
+    .create-exp-day-list {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .create-exp-day-row {
+        display: flex;
+        gap: 14px;
+        align-items: center;
+    }
+
+    .create-exp-outline-btn {
+        height: 42px;
+        padding: 0 18px;
+        border: 1px solid #cbd5e1;
+        background: #fff;
+        color: #6d4f32;
+        font-family: inherit;
+        font-size: 0.95rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        cursor: pointer;
+    }
+
+    .create-exp-delete-btn {
+        flex: 0 0 auto;
+        height: 48px;
+        padding: 0 18px;
+        border: 1px solid #efb4b4;
+        background: #fff;
+        color: #b91c1c;
+        font-family: inherit;
+        font-size: 0.92rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        cursor: pointer;
+    }
+
+    .create-exp-chip-row {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+        align-items: stretch;
+    }
+
+    .create-exp-chip {
+        min-height: 48px;
+        border: 1px solid #cbd5e1;
+        background: #fff;
+        color: #607089;
+        font-family: inherit;
+        font-size: 0.95rem;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+    .create-exp-chip.is-active {
+        background: #0b1739;
+        border-color: #0b1739;
+        color: #fff;
+    }
+
+    .create-exp-inline-input {
+        min-height: 48px;
+    }
+
+    .create-exp-helper {
+        margin: 10px 0 0;
+        color: #607089;
+        font-size: 0.9rem;
+    }
+
+    .create-exp-helper-tight {
+        margin-top: -2px;
+        margin-bottom: 18px;
+    }
+
+    .create-exp-radio-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .create-exp-radio-card {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        padding: 16px;
+        border: 1px solid #d9e1ea;
+        cursor: pointer;
+    }
+
+    .create-exp-radio-card.is-selected {
+        border-color: #0f172a;
+    }
+
+    .create-exp-radio-card input {
+        margin-top: 4px;
+        accent-color: #0b1739;
+    }
+
+    .create-exp-radio-card strong,
+    .create-exp-checkbox-card strong {
+        display: block;
+        color: #172033;
+        font-size: 1rem;
+    }
+
+    .create-exp-radio-card span,
+    .create-exp-checkbox-card span {
+        display: block;
+        margin-top: 6px;
+        color: #607089;
+        line-height: 1.5;
+    }
+
+    .create-exp-preview-box {
+        margin: 22px 0 10px;
+        padding: 18px 16px;
+        border: 1px solid #0f172a;
+        background: #fff;
+    }
+
+    .create-exp-preview-box span {
+        display: block;
+        color: #172033;
+        font-size: 0.82rem;
+        font-weight: 900;
+        letter-spacing: 0.8px;
+        text-transform: uppercase;
+    }
+
+    .create-exp-preview-box p {
+        margin: 10px 0 0;
+        color: #172033;
+        font-size: 1rem;
+    }
+
+    .create-exp-checkbox-card {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        margin: 18px 0;
+        padding: 16px;
+        border: 1px solid #d9e1ea;
+        cursor: pointer;
+    }
+
+    .create-exp-checkbox-card input {
+        margin-top: 4px;
+        width: 18px;
+        height: 18px;
+        accent-color: #0b1739;
+    }
+
+    .create-exp-upload-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+    }
+
+    .create-exp-upload-tile {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 14px;
+        min-height: 176px;
+        border: 2px dashed #c8d5e6;
+        background: #fdfefe;
+        color: #607089;
+        font-family: inherit;
+        font-size: 1rem;
+        cursor: pointer;
+    }
+
+    .create-exp-upload-icon {
+        display: grid;
+        place-items: center;
+        width: 36px;
+        height: 36px;
+        border: 1px solid #b8c7da;
+        border-radius: 999px;
+        font-size: 1.25rem;
+        line-height: 1;
+    }
+
+    .create-exp-review-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+    }
+
+    .create-exp-review-card {
+        padding: 20px;
+        border: 1px solid #d9e1ea;
+        background: #fff;
+    }
+
+    .create-exp-review-card span {
+        display: block;
+        margin-bottom: 10px;
+        color: #607089;
+        font-size: 0.82rem;
+        font-weight: 900;
+        letter-spacing: 0.7px;
+        text-transform: uppercase;
+    }
+
+    .create-exp-review-card h3 {
+        margin: 0 0 8px;
+        color: #172033;
+        font-size: 1.2rem;
+        font-weight: 800;
+    }
+
+    .create-exp-review-card p,
+    .create-exp-review-card small {
+        display: block;
+        color: #607089;
+        line-height: 1.6;
+    }
+
+    .create-exp-review-card p {
+        margin: 0 0 6px;
+    }
+
+    .create-exp-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .create-exp-primary,
+    .create-exp-secondary {
+        height: 48px;
+        padding: 0 18px;
+        border-radius: 2px;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        font-weight: 800;
+        cursor: pointer;
+        font-family: inherit;
+    }
+
+    .create-exp-primary {
+        border: none;
+        background: #0b1739;
+        color: #fff;
+    }
+
+    .create-exp-secondary {
+        border: 1px solid #e2e8f0;
+        background: #faf7f4;
+        color: #6d4f32;
+    }
+
+    @@media (max-width: 980px) {
+        .create-stepper {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            row-gap: 24px;
+        }
+
+        .create-stepper-line {
+            display: none;
+        }
+
+        .create-exp-check-grid,
+        .create-exp-three-col,
+        .create-exp-two-col {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .create-exp-chip-row,
+        .create-exp-upload-grid,
+        .create-exp-review-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
+    @@media (max-width: 640px) {
+        .create-exp-page {
+            padding-left: 12px;
+            padding-right: 12px;
+        }
+
+        .create-stepper-card,
+        .create-exp-card {
+            padding: 20px;
+        }
+
+        .create-stepper {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .create-exp-check-grid,
+        .create-exp-three-col,
+        .create-exp-two-col,
+        .create-exp-chip-row,
+        .create-exp-upload-grid,
+        .create-exp-review-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .create-exp-actions {
+            flex-direction: column;
+            gap: 12px;
+            align-items: stretch;
+        }
+
+        .create-exp-day-row {
+            flex-direction: column;
+            align-items: stretch;
+        }
+    }
+</style>

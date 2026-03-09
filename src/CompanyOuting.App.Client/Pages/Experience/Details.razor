@@ -1,0 +1,679 @@
+@page "/experience/{Slug}"
+
+@inject NavigationManager Navigation
+
+<PageTitle>@(_experience?.Title ?? "Experience") - Company Outing</PageTitle>
+
+@if (_experience is null)
+{
+    <div class="experience-not-found">
+        <h1>Experience not found</h1>
+        <a href="/marketplace">Back to marketplace</a>
+    </div>
+}
+else
+{
+    <div class="experience-detail-page">
+        <div class="experience-detail-shell">
+            <div class="experience-breadcrumbs">
+                <span>Home</span>
+                <span>/</span>
+                <span>@_experience.Country</span>
+                <span>/</span>
+                <strong>@_experience.Title</strong>
+            </div>
+
+            <a href="/marketplace" class="experience-back-link">&larr; Back to marketplace</a>
+
+            <div class="experience-detail-grid">
+                <section class="experience-main">
+                    <img src="@_experience.HeroImage" alt="@_experience.Title" class="experience-hero-image" />
+
+                    <div class="experience-thumb-row">
+                        @foreach (var image in _experience.GalleryImages)
+                        {
+                            <img src="@image" alt="@_experience.Title" class="experience-thumb" />
+                        }
+                    </div>
+
+                    <div class="experience-provider-row">
+                        <div class="experience-provider-meta">
+                            <img src="@_experience.ProviderAvatar" alt="@_experience.ProviderName" class="experience-provider-avatar" />
+                            <div>
+                                <span class="experience-provider-label">Offered by</span>
+                                <strong>@_experience.ProviderName</strong>
+                            </div>
+                        </div>
+                        <div class="experience-provider-badge">Verified Provider</div>
+                    </div>
+
+                    <h1 class="experience-title">@_experience.Title</h1>
+
+                    <div class="experience-meta-row">
+                        <span>@_experience.Location</span>
+                        <span>@_experience.People people</span>
+                        <span>@_experience.Duration</span>
+                    </div>
+
+                    <div class="experience-rating-chip">★ @_experience.Rating <span>(@_experience.Reviews reviews)</span></div>
+
+                    <div class="experience-tag-row">
+                        @foreach (var tag in _experience.Tags)
+                        {
+                            <span class="experience-tag">@tag</span>
+                        }
+                    </div>
+
+                    <section class="experience-section">
+                        <h2>About This Experience</h2>
+                        <p>@_experience.About</p>
+                        <small>@_experience.TeamFit</small>
+                    </section>
+
+                    <section class="experience-section">
+                        <h2>Itinerary</h2>
+                        <ul class="experience-list">
+                            @foreach (var item in _experience.Itinerary)
+                            {
+                                <li>@item</li>
+                            }
+                        </ul>
+                    </section>
+
+                    <section class="experience-section">
+                        <h2>What's Included</h2>
+                        <div class="experience-include-grid">
+                            @foreach (var item in _experience.Included)
+                            {
+                                <div class="experience-include-item">@item</div>
+                            }
+                        </div>
+                    </section>
+
+                    <section class="experience-section">
+                        <h2>Similar Experiences You Might Like</h2>
+                        <div class="experience-similar-grid">
+                            @foreach (var similar in _experience.Similar)
+                            {
+                                <article class="experience-similar-card">
+                                    <img src="@similar.Image" alt="@similar.Title" />
+                                    <div class="experience-similar-body">
+                                        <div class="experience-similar-rating">★ @similar.Rating</div>
+                                        <h3>@similar.Title</h3>
+                                        <p>@similar.Location</p>
+                                        <div class="experience-similar-price">From $@similar.Price <span>/person</span></div>
+                                    </div>
+                                </article>
+                            }
+                        </div>
+                    </section>
+                </section>
+
+                <aside class="experience-booking-card">
+                    <div class="experience-price-head">
+                        <span>Starting From</span>
+                        <div>$@_experience.Price <small>/person</small></div>
+                    </div>
+
+                    <div class="experience-booking-field">
+                        <label>Group Size</label>
+                        <div class="experience-stepper">
+                            <button type="button" @onclick="DecreaseGuests">-</button>
+                            <input type="number" @bind="_guestCount" min="@_experience.MinGuests" max="@_experience.MaxGuests" />
+                            <button type="button" @onclick="IncreaseGuests">+</button>
+                        </div>
+                        <small>Min: @_experience.MinGuests · Max: @_experience.MaxGuests</small>
+                    </div>
+
+                    <div class="experience-booking-field">
+                        <label>Preferred Date</label>
+                        <InputDate @bind-Value="_preferredDate" class="experience-date-input" />
+                    </div>
+
+                    <div class="experience-total-row">
+                        <span>Subtotal (@_guestCount people)</span>
+                        <strong>$@(_guestCount * _experience.Price)</strong>
+                    </div>
+
+                    <div class="experience-total-row experience-total-main">
+                        <span>Total</span>
+                        <strong>$@(_guestCount * _experience.Price)</strong>
+                    </div>
+
+                    <button class="experience-primary-btn">Request Booking</button>
+                    <button class="experience-secondary-btn">Contact Provider</button>
+
+                    <ul class="experience-policy-list">
+                        <li>Free cancellation up to 30 days</li>
+                        <li>Invoice payment available for businesses</li>
+                    </ul>
+                </aside>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public string Slug { get; set; } = string.Empty;
+
+    private ExperienceDetail? _experience;
+    private int _guestCount = 50;
+    private DateTime? _preferredDate;
+
+    protected override void OnParametersSet()
+    {
+        _experience = Experiences.FirstOrDefault(x => x.Slug.Equals(Slug, StringComparison.OrdinalIgnoreCase));
+
+        if (_experience is not null)
+        {
+            _guestCount = Math.Clamp(50, _experience.MinGuests, _experience.MaxGuests);
+        }
+    }
+
+    private void IncreaseGuests()
+    {
+        if (_experience is null) return;
+        _guestCount = Math.Min(_guestCount + 1, _experience.MaxGuests);
+    }
+
+    private void DecreaseGuests()
+    {
+        if (_experience is null) return;
+        _guestCount = Math.Max(_guestCount - 1, _experience.MinGuests);
+    }
+
+    private static readonly List<ExperienceDetail> Experiences =
+    [
+        new(
+            "culinary-team-experience",
+            "Culinary Team Experience",
+            "Italy",
+            "Tuscany, Italy",
+            "15-80",
+            "3 days, 2 nights",
+            4.9m,
+            201,
+            980,
+            15,
+            80,
+            "Culinary Connections",
+            "https://images.unsplash.com/photo-1545239351-1141bd82e8a6?q=80&w=120&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=1400&auto=format&fit=crop",
+            [
+                "https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=300&auto=format&fit=crop",
+                "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=300&auto=format&fit=crop",
+                "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=300&auto=format&fit=crop"
+            ],
+            ["Culinary", "Cultural", "Team Building", "Spring", "Summer", "Fall"],
+            "Bring your team together through the art of cooking. Learn from Michelin-star chefs in Tuscany while enjoying wine tasting and Italian culture.",
+            "Best for 15-80 person teams",
+            [
+                "Day 1: Arrival, welcome dinner, and culinary introduction",
+                "Day 2: Cooking masterclass, wine tasting, team cooking challenge",
+                "Day 3: Market visit, final meal preparation, and farewell"
+            ],
+            [
+                "Accommodation in villa",
+                "All meals and wine",
+                "Chef instruction",
+                "Cooking equipment",
+                "Recipe books"
+            ],
+            [
+                new("Sweet Meetings at Madame Chocola", "Stavanger", 4.9m, 850, "https://images.unsplash.com/photo-1519864600265-abb23847ef2c?q=80&w=400&auto=format&fit=crop"),
+                new("Pimp My Party at Gaffel & Karaffel", "Stavanger", 4.7m, 950, "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?q=80&w=400&auto=format&fit=crop"),
+                new("Progressive Dinner Party at Supper Club Stavanger", "Stavanger", 4.9m, 1250, "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=400&auto=format&fit=crop")
+            ]
+        ),
+        new(
+            "wellness-mindfulness-retreat",
+            "Wellness & Mindfulness Retreat",
+            "Indonesia",
+            "Ubud, Bali",
+            "10-50",
+            "4 days, 3 nights",
+            4.9m,
+            167,
+            920,
+            10,
+            50,
+            "Serenity Collective",
+            "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=120&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=1400&auto=format&fit=crop",
+            [
+                "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=300&auto=format&fit=crop",
+                "https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=300&auto=format&fit=crop",
+                "https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=300&auto=format&fit=crop"
+            ],
+            ["Wellness", "Mindfulness", "All Year"],
+            "Restore focus and team energy with guided yoga, mindfulness sessions, and curated wellness experiences in Bali.",
+            "Best for 10-50 person teams",
+            [
+                "Day 1: Arrival, sunset meditation, healthy welcome dinner",
+                "Day 2: Sunrise yoga, breathwork, leadership reflection workshop",
+                "Day 3: Spa recovery, nature walk, closing circle",
+                "Day 4: Departure brunch and transfers"
+            ],
+            [
+                "Boutique villa stay",
+                "Daily yoga sessions",
+                "Healthy meal plan",
+                "Spa treatment",
+                "Facilitator-led workshops"
+            ],
+            [
+                new("Tech Summit & Beach Retreat", "Bali", 4.7m, 1250, "https://images.unsplash.com/photo-1469796466635-455ede028aca?q=80&w=400&auto=format&fit=crop"),
+                new("Mindful Leadership Escape", "Lombok", 4.8m, 980, "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=400&auto=format&fit=crop"),
+                new("Sunrise Strategy Camp", "Ubud", 4.6m, 870, "https://images.unsplash.com/photo-1472396961693-142e6e269027?q=80&w=400&auto=format&fit=crop")
+            ]
+        )
+    ];
+
+    private sealed record ExperienceDetail(
+        string Slug,
+        string Title,
+        string Country,
+        string Location,
+        string People,
+        string Duration,
+        decimal Rating,
+        int Reviews,
+        int Price,
+        int MinGuests,
+        int MaxGuests,
+        string ProviderName,
+        string ProviderAvatar,
+        string HeroImage,
+        List<string> GalleryImages,
+        List<string> Tags,
+        string About,
+        string TeamFit,
+        List<string> Itinerary,
+        List<string> Included,
+        List<SimilarExperience> Similar
+    );
+
+    private sealed record SimilarExperience(string Title, string Location, decimal Rating, int Price, string Image);
+}
+
+<style>
+    .experience-detail-page {
+        padding: 32px 24px 80px;
+        background: #f8fafc;
+    }
+
+    .experience-detail-shell {
+        max-width: 1180px;
+        margin: 0 auto;
+    }
+
+    .experience-breadcrumbs,
+    .experience-back-link {
+        color: #64748b;
+        font-size: 0.85rem;
+    }
+
+    .experience-breadcrumbs {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+
+    .experience-back-link {
+        display: inline-block;
+        margin-bottom: 22px;
+        text-decoration: none;
+    }
+
+    .experience-detail-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 310px;
+        gap: 28px;
+        align-items: start;
+    }
+
+    .experience-main,
+    .experience-booking-card {
+        background: #fff;
+        border: 1px solid #dbe4ee;
+    }
+
+    .experience-main {
+        padding: 20px;
+    }
+
+    .experience-hero-image {
+        width: 100%;
+        height: 420px;
+        object-fit: cover;
+        display: block;
+    }
+
+    .experience-thumb-row {
+        display: flex;
+        gap: 10px;
+        margin: 12px 0 14px;
+    }
+
+    .experience-thumb {
+        width: 110px;
+        height: 72px;
+        object-fit: cover;
+        border: 1px solid #dbe4ee;
+    }
+
+    .experience-provider-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 16px;
+    }
+
+    .experience-provider-meta {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .experience-provider-avatar {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .experience-provider-label,
+    .experience-provider-badge {
+        color: #64748b;
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        font-weight: 800;
+    }
+
+    .experience-title {
+        margin: 0 0 10px;
+        color: #0f172a;
+        font-size: 3rem;
+        line-height: 1.05;
+        letter-spacing: -1.5px;
+    }
+
+    .experience-meta-row,
+    .experience-tag-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .experience-meta-row {
+        margin-bottom: 14px;
+        color: #64748b;
+        font-size: 0.95rem;
+        font-weight: 600;
+    }
+
+    .experience-rating-chip {
+        display: inline-flex;
+        gap: 6px;
+        padding: 10px 12px;
+        border: 1px solid #dbe4ee;
+        color: #0f172a;
+        font-size: 0.95rem;
+        font-weight: 800;
+    }
+
+    .experience-rating-chip span {
+        color: #64748b;
+        font-weight: 600;
+    }
+
+    .experience-tag-row {
+        margin: 16px 0 22px;
+    }
+
+    .experience-tag {
+        padding: 7px 10px;
+        border: 1px solid #dbe4ee;
+        color: #64748b;
+        font-size: 0.8rem;
+        font-weight: 700;
+    }
+
+    .experience-section {
+        padding: 24px 0;
+        border-top: 1px solid #dbe4ee;
+    }
+
+    .experience-section h2 {
+        margin: 0 0 14px;
+        color: #172033;
+        font-size: 1.8rem;
+        font-weight: 800;
+    }
+
+    .experience-section p,
+    .experience-section small,
+    .experience-list li,
+    .experience-include-item {
+        color: #52627e;
+        font-size: 1rem;
+        line-height: 1.7;
+    }
+
+    .experience-list {
+        margin: 0;
+        padding-left: 18px;
+    }
+
+    .experience-include-grid,
+    .experience-similar-grid {
+        display: grid;
+        gap: 18px;
+    }
+
+    .experience-include-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .experience-similar-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .experience-similar-card {
+        border: 1px solid #dbe4ee;
+        background: #fff;
+        overflow: hidden;
+    }
+
+    .experience-similar-card img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        display: block;
+    }
+
+    .experience-similar-body {
+        padding: 14px;
+    }
+
+    .experience-similar-rating {
+        display: inline-block;
+        margin-bottom: 12px;
+        padding: 6px 10px;
+        background: #fff;
+        border: 1px solid #dbe4ee;
+        font-size: 0.82rem;
+        font-weight: 800;
+    }
+
+    .experience-similar-body h3 {
+        margin: 0 0 8px;
+        color: #172033;
+        font-size: 1rem;
+        font-weight: 800;
+    }
+
+    .experience-similar-body p {
+        margin: 0 0 10px;
+        color: #64748b;
+        font-size: 0.88rem;
+    }
+
+    .experience-similar-price {
+        color: #0f172a;
+        font-size: 1.3rem;
+        font-weight: 900;
+    }
+
+    .experience-similar-price span {
+        color: #64748b;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+
+    .experience-booking-card {
+        position: sticky;
+        top: 120px;
+        padding: 20px;
+    }
+
+    .experience-price-head {
+        padding-bottom: 18px;
+        border-bottom: 1px solid #dbe4ee;
+    }
+
+    .experience-price-head span,
+    .experience-booking-field label {
+        display: block;
+        margin-bottom: 8px;
+        color: #64748b;
+        font-size: 0.75rem;
+        font-weight: 900;
+        letter-spacing: 0.8px;
+        text-transform: uppercase;
+    }
+
+    .experience-price-head div {
+        color: #0f172a;
+        font-size: 3rem;
+        font-weight: 900;
+        line-height: 1;
+    }
+
+    .experience-price-head small {
+        color: #64748b;
+        font-size: 0.9rem;
+        font-weight: 600;
+    }
+
+    .experience-booking-field {
+        margin-top: 20px;
+    }
+
+    .experience-stepper {
+        display: grid;
+        grid-template-columns: 36px 1fr 36px;
+        gap: 10px;
+    }
+
+    .experience-stepper button,
+    .experience-stepper input,
+    .experience-date-input,
+    .experience-primary-btn,
+    .experience-secondary-btn {
+        min-height: 44px;
+        font-family: inherit;
+        font-size: 0.95rem;
+    }
+
+    .experience-stepper button {
+        border: 1px solid #dbe4ee;
+        background: #fff;
+        color: #0f172a;
+        cursor: pointer;
+    }
+
+    .experience-stepper input,
+    .experience-date-input {
+        width: 100%;
+        padding: 0 12px;
+        border: 1px solid #dbe4ee;
+    }
+
+    .experience-booking-field small {
+        display: block;
+        margin-top: 8px;
+        color: #64748b;
+        font-size: 0.78rem;
+    }
+
+    .experience-total-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 18px;
+        color: #64748b;
+        font-size: 0.92rem;
+    }
+
+    .experience-total-main {
+        padding: 14px 0 18px;
+        border-bottom: 1px solid #dbe4ee;
+        color: #0f172a;
+        font-size: 1.05rem;
+        font-weight: 800;
+    }
+
+    .experience-primary-btn,
+    .experience-secondary-btn {
+        width: 100%;
+        margin-top: 14px;
+        text-transform: uppercase;
+        font-weight: 900;
+        letter-spacing: 0.8px;
+        cursor: pointer;
+    }
+
+    .experience-primary-btn {
+        border: none;
+        background: #0b1739;
+        color: #fff;
+    }
+
+    .experience-secondary-btn {
+        border: 1px solid #0b1739;
+        background: #fff;
+        color: #0b1739;
+    }
+
+    .experience-policy-list {
+        margin: 18px 0 0;
+        padding-left: 18px;
+        color: #64748b;
+        font-size: 0.84rem;
+        line-height: 1.8;
+    }
+
+    .experience-not-found {
+        max-width: 760px;
+        margin: 80px auto;
+        padding: 32px;
+        text-align: center;
+    }
+
+    @@media (max-width: 960px) {
+        .experience-detail-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .experience-booking-card {
+            position: static;
+        }
+
+        .experience-similar-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>

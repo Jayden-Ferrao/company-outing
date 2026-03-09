@@ -1,0 +1,180 @@
+@inherits LayoutComponentBase
+
+<div class="provider-layout-shell">
+    <header class="provider-global-header">
+        <a href="/dashboard" class="provider-global-brand">
+            <div class="provider-logo-wrapper">
+                <div class="provider-logo-top-line">
+                    <span class="provider-logo-line"></span>
+                    <span class="provider-logo-tiny">COMPANY</span>
+                    <span class="provider-logo-line"></span>
+                </div>
+                <div class="provider-logo-bottom-line">
+                    <span class="provider-logo-huge">OUTING</span>
+                    <span class="provider-logo-sparkle">✦</span>
+                </div>
+            </div>
+            <span class="provider-global-badge">Provider</span>
+        </a>
+
+        <div class="provider-global-header-actions">
+            <a href="/provider/create" class="provider-global-secondary provider-global-create">Create Experience</a>
+            <a href="/marketplace" class="provider-global-secondary">View Marketplace</a>
+            <a href="/logout" class="provider-global-secondary provider-global-logout">
+                <span class="provider-global-logout-icon">↪</span>
+                <span>Logout</span>
+            </a>
+        </div>
+    </header>
+
+    <main class="provider-layout-body">
+        @Body
+    </main>
+</div>
+
+<style>
+    .provider-layout-shell {
+        min-height: 100vh;
+        background: #eef2f6;
+    }
+
+    .provider-global-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        min-height: 96px;
+        padding: 18px 36px;
+        border-bottom: 1px solid #d9e1ea;
+        background: #ffffff;
+    }
+
+    .provider-global-brand {
+        display: flex;
+        align-items: center;
+        gap: 22px;
+        text-decoration: none;
+    }
+
+    .provider-logo-wrapper {
+        display: flex;
+        flex-direction: column;
+        line-height: 1;
+        transform: translateY(1px);
+    }
+
+    .provider-logo-top-line {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin-bottom: 2px;
+    }
+
+    .provider-logo-line {
+        width: 34px;
+        height: 2px;
+        background: #111827;
+        opacity: 0.78;
+    }
+
+    .provider-logo-tiny {
+        color: #111827;
+        font-size: 0.82rem;
+        font-weight: 900;
+        letter-spacing: 1.3px;
+    }
+
+    .provider-logo-bottom-line {
+        display: flex;
+        align-items: flex-start;
+    }
+
+    .provider-logo-huge {
+        color: #111827;
+        font-size: 3rem;
+        font-weight: 950;
+        letter-spacing: -2px;
+    }
+
+    .provider-logo-sparkle {
+        margin-left: 4px;
+        margin-top: 8px;
+        color: #111827;
+        font-size: 1rem;
+        opacity: 0.82;
+    }
+
+    .provider-global-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 54px;
+        padding: 0 18px;
+        border-radius: 999px;
+        background: #2563eb;
+        color: #ffffff;
+        font-size: 1rem;
+        font-weight: 800;
+    }
+
+    .provider-global-header-actions {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+    }
+
+    .provider-global-secondary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 54px;
+        padding: 0 28px;
+        border-radius: 4px;
+        font-size: 0.95rem;
+        font-weight: 900;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        text-decoration: none;
+        font-family: inherit;
+        cursor: pointer;
+    }
+
+    .provider-global-secondary {
+        border: 2px solid #334160;
+        background: #ffffff;
+        color: #1f2a44;
+    }
+
+    .provider-global-create {
+        background: #ffffff;
+    }
+
+    .provider-global-logout {
+        gap: 12px;
+        color: #8b5e3c;
+        border-color: #d8dce6;
+    }
+
+    .provider-global-logout-icon {
+        font-size: 1.2rem;
+        line-height: 1;
+    }
+
+    .provider-layout-body {
+        min-height: calc(100vh - 96px);
+    }
+
+    @@media (max-width: 900px) {
+        .provider-global-header {
+            flex-direction: column;
+            gap: 18px;
+            padding: 16px;
+        }
+
+        .provider-global-header-actions {
+            width: 100%;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+    }
+</style>
