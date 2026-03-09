@@ -1081,10 +1081,10 @@
 /Users/jaydenkilowott/Desktop/company outing .net/company-outing/src/CompanyOuting.App.Client/obj/Debug/net10.0/refint/CompanyOuting.App.Client.dll
 /Users/jaydenkilowott/Desktop/company outing .net/company-outing/src/CompanyOuting.App.Client/obj/Debug/net10.0/CompanyOuting.App.Client.pdb
 /Users/jaydenkilowott/Desktop/company outing .net/company-outing/src/CompanyOuting.App.Client/obj/Debug/net10.0/ref/CompanyOuting.App.Client.dll
-/Users/jaydenkilowott/Desktop/company outing .net/company-outing/src/CompanyOuting.App.Client/bin/Debug/net10.0/wwwroot/_framework/CompanyOuting.App.Client.4b74x0niq1.wasm
-/Users/jaydenkilowott/Desktop/company outing .net/company-outing/src/CompanyOuting.App.Client/bin/Debug/net10.0/wwwroot/_framework/CompanyOuting.App.Client.m0vipyo768.pdb
-/Users/jaydenkilowott/Desktop/company outing .net/company-outing/src/CompanyOuting.App.Client/bin/Debug/net10.0/wwwroot/_framework/CompanyOuting.App.Client.4b74x0niq1.wasm.gz
-/Users/jaydenkilowott/Desktop/company outing .net/company-outing/src/CompanyOuting.App.Client/bin/Debug/net10.0/wwwroot/_framework/CompanyOuting.App.Client.m0vipyo768.pdb.gz
-/Users/jaydenkilowott/Desktop/company outing .net/company-outing/src/CompanyOuting.App.Client/obj/Debug/net10.0/compressed/ez9xelhgf1-{0}-4b74x0niq1-4b74x0niq1.gz
-/Users/jaydenkilowott/Desktop/company outing .net/company-outing/src/CompanyOuting.App.Client/obj/Debug/net10.0/compressed/5ug6wf7mdc-{0}-m0vipyo768-m0vipyo768.gz
-/Users/jaydenkilowott/Desktop/company outing .net/company-outing/src/CompanyOuting.App.Client/obj/Debug/net10.0/compressed/hdyhou6zg6-{0}-3mtrz5ww5l-3mtrz5ww5l.gz
+/Users/jaydenkilowott/Desktop/company outing .net/company-outing/src/CompanyOuting.App.Client/bin/Debug/net10.0/wwwroot/_framework/CompanyOuting.App.Client.or7aff752w.wasm
+/Users/jaydenkilowott/Desktop/company outing .net/company-outing/src/CompanyOuting.App.Client/bin/Debug/net10.0/wwwroot/_framework/CompanyOuting.App.Client.pu7eccigwr.pdb
+/Users/jaydenkilowott/Desktop/company outing .net/company-outing/src/CompanyOuting.App.Client/bin/Debug/net10.0/wwwroot/_framework/CompanyOuting.App.Client.or7aff752w.wasm.gz
+/Users/jaydenkilowott/Desktop/company outing .net/company-outing/src/CompanyOuting.App.Client/bin/Debug/net10.0/wwwroot/_framework/CompanyOuting.App.Client.pu7eccigwr.pdb.gz
+/Users/jaydenkilowott/Desktop/company outing .net/company-outing/src/CompanyOuting.App.Client/obj/Debug/net10.0/compressed/ez9xelhgf1-{0}-or7aff752w-or7aff752w.gz
+/Users/jaydenkilowott/Desktop/company outing .net/company-outing/src/CompanyOuting.App.Client/obj/Debug/net10.0/compressed/5ug6wf7mdc-{0}-pu7eccigwr-pu7eccigwr.gz
+/Users/jaydenkilowott/Desktop/company outing .net/company-outing/src/CompanyOuting.App.Client/obj/Debug/net10.0/compressed/hdyhou6zg6-{0}-3781dy48b5-3781dy48b5.gz

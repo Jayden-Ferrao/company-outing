@@ -1,87 +1,37 @@
 @page "/marketplace"
-@using MudBlazor
+@page "/browse-experience"
 
-<MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-8 mb-12">
-    <MudGrid>
-        <!-- Sidebar Filters -->
-        <MudItem xs="12" sm="3" md="2">
-            <MudPaper Class="pa-6 rounded-xl" Elevation="4">
-                <MudText Typo="Typo.h6" Class="mb-4" Style="font-weight: 700;">Filters</MudText>
-                
-                <MudText Typo="Typo.subtitle2" Class="mt-6 mb-2">Category</MudText>
-                <MudList T="string">
-                    <MudListItem T="string" Text="Team Building" />
-                    <MudListItem T="string" Text="Corporate Retreats" />
-                    <MudListItem T="string" Text="Outdoor Adventures" />
-                    <MudListItem T="string" Text="Workshops" />
-                    <MudListItem T="string" Text="Holiday Parties" />
-                </MudList>
+@using CompanyOuting.App.Client.Components.BrowseSections
 
-                <MudText Typo="Typo.subtitle2" Class="mt-6 mb-2">Price Range</MudText>
-                <MudSlider T="double" Min="0" Max="1000" Value="250" Color="Color.Primary" ValueLabel="true" />
-                
-                <MudText Typo="Typo.subtitle2" Class="mt-6 mb-2">Group Size</MudText>
-                <MudNumericField T="int" Value="10" Min="1" Max="500" Label="Min. People" Variant="Variant.Outlined" Margin="Margin.Dense" />
+<PageTitle>Browse Experiences</PageTitle>
 
-                <MudButton Color="Color.Primary" Variant="Variant.Filled" Size="Size.Small" FullWidth="true" Class="mt-8 rounded-pill">
-                    Apply Filters
-                </MudButton>
-            </MudPaper>
-        </MudItem>
-
-        <!-- Listings Content -->
-        <MudItem xs="12" sm="9" md="10">
-            <div class="d-flex align-center justify-between mb-6 px-4">
-                <div>
-                    <MudText Typo="Typo.h4" Style="font-weight: 700;">Marketplace</MudText>
-                    <MudText Typo="Typo.body2" Class="mud-text-secondary">Showing 142 results matching your criteria.</MudText>
-                </div>
-                <MudSpacer />
-                <MudSelect T="string" Value="@("Newest")" Label="Sort By" Variant="Variant.Outlined" Margin="Margin.Dense" Style="max-width: 200px;">
-                    <MudSelectItem T="string" Value="@("Newest")">Newest</MudSelectItem>
-                    <MudSelectItem T="string" Value="@("PriceLow")">Price: Low to High</MudSelectItem>
-                    <MudSelectItem T="string" Value="@("PriceHigh")">Price: High to Low</MudSelectItem>
-                    <MudSelectItem T="string" Value="@("Rating")">Highest Rated</MudSelectItem>
-                </MudSelect>
-            </div>
-
-            <MudGrid Class="px-4">
-                @for (int i = 1; i <= 9; i++)
-                {
-                    <MudItem xs="12" sm="6" md="4" lg="3">
-                        <MudCard Class="rounded-xl marketplace-card transition-all">
-                            <MudCardMedia Image="https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=400&q=80" Height="180" />
-                            <MudCardContent>
-                                <div class="d-flex gap-2 mb-2">
-                                    <MudChip T="string" Size="Size.Small" Color="Color.Primary" Variant="Variant.Text">Adventure</MudChip>
-                                    <MudChip T="string" Size="Size.Small" Color="Color.Tertiary" Variant="Variant.Text">⭐ 4.9</MudChip>
-                                </div>
-                                <MudText Typo="Typo.h6" Style="font-weight: 700;">Alpine Team Retreat @i</MudText>
-                                <MudText Typo="Typo.body2" Class="mud-text-secondary mt-1 overflow-hidden" Style="max-height: 40px;">Professional mountain guides and luxury cabins for teams of all sizes.</MudText>
-                            </MudCardContent>
-                            <MudCardActions>
-                                <MudText Typo="Typo.body1" Color="Color.Primary" Style="font-weight: 800;">$199 <span style="font-weight: 400; color: var(--mud-palette-text-secondary);">$ / person</span></MudText>
-                                <MudSpacer />
-                                <MudButton Variant="Variant.Text" Color="Color.Primary" Size="Size.Small" EndIcon="@Icons.Material.Filled.ArrowForwardIos">Details</MudButton>
-                            </MudCardActions>
-                        </MudCard>
-                    </MudItem>
-                }
-            </MudGrid>
-
-            <div class="d-flex justify-center mt-12">
-                <MudPagination Count="10" Selected="1" Color="Color.Primary" Variant="Variant.Filled" />
-            </div>
-        </MudItem>
-    </MudGrid>
-</MudContainer>
+<BrowseHeroSection />
+<BrowseFilterBar />
+<div class="bp-body">
+    <div class="bp-sidebar">
+        <BrowseSidebarFilters />
+    </div>
+    <div class="bp-results">
+        <BrowseResultsGrid />
+    </div>
+</div>
 
 <style>
-    .marketplace-card:hover {
-        transform: scale(1.02);
-        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    .bp-body {
+        display: flex;
+        gap: 40px;
+        max-width: 1280px;
+        margin: 40px auto 80px;
+        padding: 0 32px;
     }
-    .transition-all {
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    .bp-sidebar {
+        width: 240px;
+        flex-shrink: 0;
+    }
+
+    .bp-results {
+        flex: 1;
+        min-width: 0;
     }
 </style>

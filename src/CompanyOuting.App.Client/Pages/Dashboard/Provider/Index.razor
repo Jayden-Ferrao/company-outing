@@ -14,7 +14,7 @@
         <MudItem xs="12" md="8">
             <MudPaper Class="pa-8 rounded-xl h-100" Elevation="2">
                 <MudText Typo="Typo.h5" Style="font-weight: 700;" Class="mb-4">Earnings Overview</MudText>
-                <MudChart T="double" ChartType="ChartType.Line" ChartSeries="@_series" XAxisLabels="@_labels" Width="100%" Height="350px" ChartOptions="@_chartOptions" />
+                <MudChart T="double" ChartType="ChartType.Line" ChartSeries="@_series" xaxislabels="@_labels" Width="100%" Height="350px" ChartOptions="@_chartOptions" />
             </MudPaper>
         </MudItem>
 
@@ -54,7 +54,7 @@
             <MudPaper Class="pa-8 rounded-xl" Elevation="2">
                 <div class="d-flex align-center justify-between mb-6">
                     <MudText Typo="Typo.h5" Style="font-weight: 700;">My Listings</MudText>
-                    <MudTabs Color="Color.Primary" Variant="Variant.Text">
+                    <MudTabs Color="Color.Primary">
                         <MudTabPanel Text="Active" />
                         <MudTabPanel Text="Drafts" />
                         <MudTabPanel Text="Completed" />
@@ -68,7 +68,7 @@
                             <MudCard Class="rounded-xl border-dashed">
                                 <MudCardContent>
                                     <div class="d-flex gap-4">
-                                        <MudAvatar Square="true" Size="Size.Large" Src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=100&q=80" />
+                                        <MudAvatar Square="true" Size="Size.Large" src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=100&q=80" />
                                         <div>
                                             <MudText Typo="Typo.subtitle1" Style="font-weight: 700;">Alpine Experience @i</MudText>
                                             <MudText Typo="Typo.caption">Updated 2 days ago</MudText>
