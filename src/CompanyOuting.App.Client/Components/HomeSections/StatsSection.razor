@@ -1,0 +1,72 @@
+<style>
+    .stat-number-wrap {
+        font-size: 3.5rem;
+        font-weight: 900;
+        letter-spacing: -0.05em;
+        color: #111827;
+        line-height: 1;
+        margin-bottom: 12px;
+    }
+    .s-label {
+        color: #64748b;
+        font-size: 0.85rem;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+    }
+</style>
+
+@* Stats Section *@
+<div style="margin-bottom: 150px;">
+    <MudGrid Class="stats-section px-12">
+        <MudItem xs="6" md="3" Class="text-center">
+            <div class="stat-number-wrap">
+                <span id="stat-exp">500</span><span>+</span>
+            </div>
+            <div class="s-label">Experiences</div>
+        </MudItem>
+        <MudItem xs="6" md="3" Class="text-center">
+            <div class="stat-number-wrap">
+                <span id="stat-providers">50</span><span>+</span>
+            </div>
+            <div class="s-label">Verified Partners</div>
+        </MudItem>
+        <MudItem xs="6" md="3" Class="text-center">
+            <div class="stat-number-wrap">
+                <span id="stat-countries">35</span>
+            </div>
+            <div class="s-label">Countries</div>
+        </MudItem>
+        <MudItem xs="6" md="3" Class="text-center">
+            <div class="stat-number-wrap">
+                <span id="stat-teams">40</span><span>+</span>
+            </div>
+            <div class="s-label">Years Experience</div>
+        </MudItem>
+    </MudGrid>
+
+    <MudDivider Class="w-100" Style="border-color: rgba(0,0,0,0.15); margin-top: 100px;" />
+</div>
+
+<script>
+    (function() {
+        var startCounters = function() {
+            if (window.animateCounters) {
+                window.animateCounters([
+                    { id: "stat-exp",       value: 500 },
+                    { id: "stat-providers", value = 50  },
+                    { id: "stat-countries", value = 35  },
+                    { id: "stat-teams",     value = 40  }
+                ]);
+            }
+        };
+
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", startCounters);
+        } else {
+            // Give the browser a microtask to ensure elements are painted
+            setTimeout(startCounters, 50);
+        }
+    })();
+</script>
+

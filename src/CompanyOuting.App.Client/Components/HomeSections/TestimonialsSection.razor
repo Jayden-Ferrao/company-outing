@@ -1,0 +1,87 @@
+@using MudBlazor
+
+@* Testimonials Section *@
+<div class="testimonials-section-wrapper">
+    <MudGrid Spacing="6">
+        @foreach (var test in _testimonials)
+        {
+            <MudItem xs="12" md="4">
+                <div class="t-card">
+                    <div class="t-icon-wrap mb-6">
+                        <MudIcon Icon="@Icons.Material.Outlined.Assignment" Style="font-size: 1.6rem; color: #9BAEC2;" />
+                    </div>
+                    <p class="t-quote">"@test.Quote"</p>
+                    <div class="t-author">
+                        <span class="t-name">@test.Name</span>
+                        <span class="t-role">@test.Role</span>
+                    </div>
+                </div>
+            </MudItem>
+        }
+    </MudGrid>
+</div>
+
+<style>
+    .testimonials-section-wrapper {
+        padding-top: 80px;
+        padding-bottom: 80px;
+    }
+
+    .t-card {
+        background-color: #ffffff;
+        border-radius: 20px;
+        padding: 36px 36px 32px 36px;
+        display: flex;
+        flex-direction: column;
+        min-height: 300px;
+        box-shadow: 0 2px 16px 0 rgba(0,0,0,0.06);
+    }
+
+    .t-icon-wrap {
+        display: flex;
+        align-items: center;
+    }
+
+    .t-quote {
+        font-size: 1.05rem;
+        line-height: 1.65;
+        color: #2d3a4a;
+        font-weight: 400;
+        flex-grow: 1;
+        margin: 0 0 32px 0;
+    }
+
+    .t-author {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        margin-top: auto;
+    }
+
+    .t-name {
+        font-size: 1rem;
+        font-weight: 800;
+        color: #0f172a;
+    }
+
+    .t-role {
+        font-size: 0.85rem;
+        color: #64748b;
+        font-weight: 400;
+    }
+</style>
+
+@code {
+    private List<Testimonial> _testimonials = new()
+    {
+        new Testimonial { Quote = "Company Outing transformed how we plan team events. The quality of venues and seamless booking process saved us weeks of work.", Name = "Sarah Jensen", Role = "Head of People, TechCorp AS" },
+        new Testimonial { Quote = "We hosted 300 employees at a fjord retreat. Every detail was perfect. This platform is a game-changer for corporate events.", Name = "Marcus Berg", Role = "CEO, Nordic Finance Group" },
+        new Testimonial { Quote = "The verified providers and transparent pricing gave us confidence. Our team still talks about the experience months later.", Name = "Emma Larsen", Role = "Operations Director, Stavanger Energy" }
+    };
+
+    public class Testimonial {
+        public string Quote { get; set; } = "";
+        public string Name { get; set; } = "";
+        public string Role { get; set; } = "";
+    }
+}

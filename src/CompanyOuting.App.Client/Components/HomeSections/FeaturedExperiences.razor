@@ -1,0 +1,72 @@
+@using MudBlazor
+
+@* Featured Experiences *@
+<div class="section-header text-center mb-16">
+    <MudText Typo="Typo.h3" Class="section-title font-black">Featured Experiences</MudText>
+    <MudText Typo="Typo.body1" Class="section-subtitle mt-4">Handpicked corporate experiences currently available.</MudText>
+</div>
+
+<MudGrid Spacing="6">
+    @foreach (var exp in _featuredExperiences)
+    {
+        <MudItem xs="12" sm="6" md="4" lg="3" Class="d-flex">
+            <MudCard Class="experience-card rounded-xl elevation-0 d-flex flex-column h-100 b2b-shadow">
+                <div class="card-image-content relative overflow-hidden rounded-t-xl">
+                    <MudImage Src="@exp.Image" Alt="@exp.Title" Class="card-img" />
+                    <span class="featured-badge">Featured</span>
+                </div>
+                <MudCardContent Class="px-6 pt-6 flex-grow-1 d-flex flex-column">
+                    <div class="d-flex align-center gap-1 mb-3">
+                        <MudIcon Icon="@Icons.Material.Filled.Star" Color="Color.Warning" Size="Size.Small" />
+                        <MudText Typo="Typo.body2" Class="font-bold site-dark-text">@exp.Rating</MudText>
+                        <MudText Typo="Typo.body2" Class="site-grey-text">(@exp.ReviewCount)</MudText>
+                    </div>
+                    <MudText Typo="Typo.h6" Class="experience-title mb-4 font-black">@exp.Title</MudText>
+                    <div class="d-flex align-center gap-6 site-grey-text mb-6">
+                        <div class="d-flex align-center gap-2">
+                            <MudIcon Icon="@Icons.Material.Outlined.LocationOn" Size="Size.Small" />
+                            <MudText Typo="Typo.body2">@exp.Location</MudText>
+                        </div>
+                        <div class="d-flex align-center gap-2">
+                            <MudIcon Icon="@Icons.Material.Outlined.People" Size="Size.Small" />
+                            <MudText Typo="Typo.body2">@exp.GroupSize</MudText>
+                        </div>
+                    </div>
+                    <MudSpacer />
+                    <div class="d-flex align-center gap-2 pt-4 border-t-1">
+                        <MudText Typo="Typo.body2" Class="site-grey-text">From</MudText>
+                        <MudText Typo="Typo.h5" Class="price-text font-black">€@exp.Price</MudText>
+                        <MudText Typo="Typo.body2" Class="site-grey-text">per person</MudText>
+                    </div>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+    }
+</MudGrid>
+
+<div class="d-flex justify-center align-center position-relative w-100" style="margin-top: 100px; margin-bottom: 100px;">
+    <MudDivider Class="position-absolute w-100" Style="border-color: rgba(0,0,0,0.15); z-index: 0;" />
+    <MudButton Variant="Variant.Filled" Class="browse-all-btn rounded px-8 py-3 position-relative" Style="z-index: 1;" EndIcon="@Icons.Material.Filled.ArrowForward">
+        BROWSE ALL EXPERIENCES
+    </MudButton>
+</div>
+
+@code {
+    private List<Experience> _featuredExperiences = new()
+    {
+        new Experience { Image = "https://images.unsplash.com/photo-1541167760496-162955ed8a9f?auto=format&fit=crop&w=800&q=80", Title = "Sweet Meetings at Madame Chocolate", Rating = 4.9, ReviewCount = 67, Location = "Stavanger", GroupSize = "10-45", Price = 850 },
+        new Experience { Image = "https://images.unsplash.com/photo-1530103043960-ef38714abb15?auto=format&fit=crop&w=800&q=80", Title = "Pimp My Party at Gaffel & Karaffel", Rating = 4.7, ReviewCount = 112, Location = "Stavanger", GroupSize = "30-250", Price = 950 },
+        new Experience { Image = "https://images.unsplash.com/photo-1559333086-b0a56225a93c?auto=format&fit=crop&w=800&q=80", Title = "Progressive Dinner Party at Supper Club...", Rating = 4.9, ReviewCount = 78, Location = "Stavanger", GroupSize = "15-80", Price = 1250 },
+        new Experience { Image = "https://images.unsplash.com/photo-1475721027187-402ad2989a38?auto=format&fit=crop&w=800&q=80", Title = "Supercharge Your Conference at...", Rating = 4.8, ReviewCount = 143, Location = "Stavanger", GroupSize = "50-500", Price = 1150 }
+    };
+
+    public class Experience {
+        public string Image { get; set; } = "";
+        public string Title { get; set; } = "";
+        public double Rating { get; set; }
+        public int ReviewCount { get; set; }
+        public string Location { get; set; } = "";
+        public string GroupSize { get; set; } = "";
+        public int Price { get; set; }
+    }
+}

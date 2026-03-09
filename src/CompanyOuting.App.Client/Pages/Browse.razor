@@ -1,0 +1,47 @@
+@page "/browse"
+@using MudBlazor
+@using CompanyOuting.App.Client.Components.BrowseSections
+
+<PageTitle>Browse Experiences - Company Outing</PageTitle>
+
+<div class="bp-root">
+
+    <BrowseHeroSection />
+
+    <BrowseFilterBar />
+
+    <div class="bp-body">
+        <div class="bp-sidebar">
+            <BrowseSidebarFilters />
+        </div>
+        <div class="bp-results">
+            <BrowseResultsGrid />
+        </div>
+    </div>
+
+</div>
+
+<style>
+    .bp-root {
+        font-family: 'Inter', sans-serif;
+    }
+
+    /* ── Two-column layout ── */
+    .bp-body {
+        display: flex;
+        gap: 40px;
+        max-width: 1280px;
+        margin: 40px auto 80px;
+        padding: 0 32px;
+    }
+
+    .bp-sidebar {
+        width: 240px;
+        flex-shrink: 0;
+    }
+
+    .bp-results {
+        flex: 1;
+        min-width: 0;   /* Prevent flex blowout */
+    }
+</style>

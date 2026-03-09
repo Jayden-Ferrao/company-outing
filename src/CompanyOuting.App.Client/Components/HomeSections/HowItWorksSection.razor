@@ -1,0 +1,64 @@
+@using MudBlazor
+
+@* How It Works Section *@
+<div class="how-it-works-section" style="padding-top: 80px; padding-bottom: 120px;">
+    <MudContainer MaxWidth="MaxWidth.Medium">
+        <div class="d-flex flex-column" style="max-width: 800px; margin: 0 auto;">
+            
+            @* Title offset to left-align perfectly with the text list, not the numbers. 
+               64px box + 36px gap = 100px explicit offset *@
+            <div style="margin-left: 100px; margin-bottom: 48px;">
+                <MudText Typo="Typo.h2" Class="font-black site-dark-text" Style="font-size: 3rem; letter-spacing: -1.5px;">How It Works</MudText>
+            </div>
+
+            <div class="d-flex align-start" style="gap: 36px; margin-bottom: 56px;">
+                <div class="step-circle font-bold shrink-0">1</div>
+                <div class="pt-1">
+                    <MudText Typo="Typo.h5" Class="font-bold mb-3 site-dark-text" Style="font-size: 1.65rem; letter-spacing: -0.5px;">Search & Filter</MudText>
+                    <MudText Typo="Typo.body1" Class="site-grey-text" Style="line-height: 1.6; font-size: 1.15rem;">Browse 500+ curated experiences using powerful filters for location, team size, budget, and activity type.</MudText>
+                </div>
+            </div>
+            
+            <div class="d-flex align-start" style="gap: 36px; margin-bottom: 56px;">
+                <div class="step-circle font-bold shrink-0">2</div>
+                <div class="pt-1">
+                    <MudText Typo="Typo.h5" Class="font-bold mb-3 site-dark-text" Style="font-size: 1.65rem; letter-spacing: -0.5px;">Compare & Shortlist</MudText>
+                    <MudText Typo="Typo.body1" Class="site-grey-text" Style="line-height: 1.6; font-size: 1.15rem;">Review detailed information, verified reviews, and transparent pricing to shortlist your perfect matches.</MudText>
+                </div>
+            </div>
+            
+            <div class="d-flex align-start" style="gap: 36px; margin-bottom: 56px;">
+                <div class="step-circle font-bold shrink-0">3</div>
+                <div class="pt-1">
+                    <MudText Typo="Typo.h5" Class="font-bold mb-3 site-dark-text" Style="font-size: 1.65rem; letter-spacing: -0.5px;">Book or Request</MudText>
+                    <MudText Typo="Typo.body1" Class="site-grey-text" Style="line-height: 1.6; font-size: 1.15rem;">Instantly book available slots or request a custom proposal with group-specific pricing and terms.</MudText>
+                </div>
+            </div>
+            
+            <div class="d-flex align-start" style="gap: 36px;">
+                <div class="step-circle font-bold shrink-0">4</div>
+                <div class="pt-1">
+                    <MudText Typo="Typo.h5" Class="font-bold mb-3 site-dark-text" Style="font-size: 1.65rem; letter-spacing: -0.5px;">Deliver an Unforgettable Experience</MudText>
+                    <MudText Typo="Typo.body1" Class="site-grey-text" Style="line-height: 1.6; font-size: 1.15rem;">Relax as verified providers handle logistics while you focus on team connection and results.</MudText>
+                </div>
+            </div>
+        </div>
+    </MudContainer>
+</div>
+
+<style>
+    .shrink-0 { flex-shrink: 0; }
+    
+    .step-circle {
+        width: 64px;
+        min-width: 64px;
+        height: 64px;
+        background-color: #111827;
+        color: white;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+    }
+</style>

@@ -1,0 +1,112 @@
+@page "/dashboard/buyer"
+@using MudBlazor
+
+<MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-12 mb-12">
+    <MudText Typo="Typo.h3" Style="font-weight: 800;" Class="mb-8">Buyer Dashboard</MudText>
+
+    <MudGrid>
+        <!-- Stats Cards -->
+        <MudItem xs="12" sm="6" md="3">
+            <MudPaper Class="pa-6 rounded-xl mud-theme-primary" Elevation="6" Style="background: linear-gradient(135deg, var(--mud-palette-primary) 0%, var(--mud-palette-primary-darken) 100%); color: white;">
+                <MudText Typo="Typo.h6" Align="Align.Start" Style="opacity: 0.8 !important;">Active Bookings</MudText>
+                <div class="d-flex align-center justify-between mt-2">
+                    <MudText Typo="Typo.h3" Style="font-weight: 800;">4</MudText>
+                    <MudIcon Icon="@Icons.Material.Filled.CalendarMonth" Size="Size.Large" Style="transform: scale(1.5); color: rgba(255,255,255,0.4);" />
+                </div>
+            </MudPaper>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="3">
+            <MudPaper Class="pa-6 rounded-xl mud-theme-secondary" Elevation="6" Style="background: linear-gradient(135deg, var(--mud-palette-secondary) 0%, var(--mud-palette-secondary-darken) 100%); color: white;">
+                <MudText Typo="Typo.h6" Align="Align.Start" Style="opacity: 0.8 !important;">Total Spent</MudText>
+                <div class="d-flex align-center justify-between mt-2">
+                    <MudText Typo="Typo.h3" Style="font-weight: 800;">$2.4k</MudText>
+                    <MudIcon Icon="@Icons.Material.Filled.Payments" Size="Size.Large" Style="transform: scale(1.5); color: rgba(255,255,255,0.4);" />
+                </div>
+            </MudPaper>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="3">
+            <MudPaper Class="pa-6 rounded-xl mud-theme-info" Elevation="6" Style="background: linear-gradient(135deg, var(--mud-palette-info) 0%, var(--mud-palette-info-darken) 100%); color: white;">
+                <MudText Typo="Typo.h6" Align="Align.Start" Style="opacity: 0.8 !important;">Pending Reviews</MudText>
+                <div class="d-flex align-center justify-between mt-2">
+                    <MudText Typo="Typo.h3" Style="font-weight: 800;">2</MudText>
+                    <MudIcon Icon="@Icons.Material.Filled.RateReview" Size="Size.Large" Style="transform: scale(1.5); color: rgba(255,255,255,0.4);" />
+                </div>
+            </MudPaper>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="3">
+            <MudPaper Class="pa-6 rounded-xl mud-theme-success" Elevation="6" Style="background: linear-gradient(135deg, var(--mud-palette-success) 0%, var(--mud-palette-success-darken) 100%); color: white;">
+                <MudText Typo="Typo.h6" Align="Align.Start" Style="opacity: 0.8 !important;">Completed Trips</MudText>
+                <div class="d-flex align-center justify-between mt-2">
+                    <MudText Typo="Typo.h3" Style="font-weight: 800;">12</MudText>
+                    <MudIcon Icon="@Icons.Material.Filled.Verified" Size="Size.Large" Style="transform: scale(1.5); color: rgba(255,255,255,0.4);" />
+                </div>
+            </MudPaper>
+        </MudItem>
+
+        <!-- Current Bookings Table -->
+        <MudItem xs="12" md="8">
+            <MudPaper Class="pa-8 rounded-xl" Elevation="2">
+                <MudText Typo="Typo.h5" Style="font-weight: 700;" Class="mb-6">Recent Bookings</MudText>
+                <MudTable Items="@_recentBookings" Hover="true" Breakpoint="Breakpoint.Sm" Elevation="0" Class="rounded-lg">
+                    <HeaderContent>
+                        <MudTh>Outing Name</MudTh>
+                        <MudTh>Date</MudTh>
+                        <MudTh>Status</MudTh>
+                        <MudTh>Action</MudTh>
+                    </HeaderContent>
+                    <RowTemplate>
+                        <MudTd DataLabel="Outing Name">@context.Name</MudTd>
+                        <MudTd DataLabel="Date">@context.Date.ToShortDateString()</MudTd>
+                        <MudTd DataLabel="Status">
+                            <MudChip T="string" Color="@GetStatusColor(context.Status)" Size="Size.Small">@context.Status</MudChip>
+                        </MudTd>
+                        <MudTd>
+                            <MudButton Variant="Variant.Text" Color="Color.Primary" Size="Size.Small">View</MudButton>
+                        </MudTd>
+                    </RowTemplate>
+                </MudTable>
+            </MudPaper>
+        </MudItem>
+
+        <!-- Recent Favorites -->
+        <MudItem xs="12" md="4">
+            <MudPaper Class="pa-8 rounded-xl" Elevation="1">
+                <MudText Typo="Typo.h5" Style="font-weight: 700;" Class="mb-6">Favorites</MudText>
+                <MudList T="string">
+                    <MudListItem T="string" Icon="@Icons.Material.Filled.Terrain" Text="Mountain Retreat 2025" SecondaryText="Denver, CO" />
+                    <MudListItem T="string" Icon="@Icons.Material.Filled.Water" Text="Kayaking Adventure" SecondaryText="Lake Tahoe, NV" />
+                    <MudListItem T="string" Icon="@Icons.Material.Filled.EmojiPeople" Text="Yoga & Mindfulness" SecondaryText="Sedona, AZ" />
+                    <MudDivider Class="my-2" />
+                    <MudButton StartIcon="@Icons.Material.Filled.Favorite" Color="Color.Primary" FullWidth="true" Class="mt-2">View All Favorities</MudButton>
+                </MudList>
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+</MudContainer>
+
+@code {
+    private List<Booking> _recentBookings = new()
+    {
+        new Booking { Name = "Alpine Hike", Date = DateTime.Now.AddDays(14), Status = "Confirmed" },
+        new Booking { Name = "Creative Workshop", Date = DateTime.Now.AddDays(5), Status = "Pending" },
+        new Booking { Name = "Tech Team Retreat", Date = DateTime.Now.AddMonths(-1), Status = "Completed" },
+    };
+
+    private Color GetStatusColor(string status) => status switch
+    {
+        "Confirmed" => Color.Success,
+        "Pending" => Color.Warning,
+        "Completed" => Color.Info,
+        _ => Color.Default
+    };
+
+    public class Booking
+    {
+        public string Name { get; set; } = "";
+        public DateTime Date { get; set; }
+        public string Status { get; set; } = "";
+    }
+}

@@ -1,0 +1,114 @@
+@page "/dashboard/provider"
+@using MudBlazor
+
+<MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-12 mb-12">
+    <div class="d-flex align-center justify-between mb-8">
+        <MudText Typo="Typo.h3" Style="font-weight: 800;">Provider Dashboard</MudText>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add" Class="rounded-pill px-6">
+            Create Listing
+        </MudButton>
+    </div>
+
+    <MudGrid>
+        <!-- Earnings Chart Placeholder -->
+        <MudItem xs="12" md="8">
+            <MudPaper Class="pa-8 rounded-xl h-100" Elevation="2">
+                <MudText Typo="Typo.h5" Style="font-weight: 700;" Class="mb-4">Earnings Overview</MudText>
+                <MudChart T="double" ChartType="ChartType.Line" ChartSeries="@_series" XAxisLabels="@_labels" Width="100%" Height="350px" ChartOptions="@_chartOptions" />
+            </MudPaper>
+        </MudItem>
+
+        <!-- Right Side Stats -->
+        <MudItem xs="12" md="4">
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudPaper Class="pa-8 rounded-xl" Elevation="2">
+                        <MudText Typo="Typo.h6" Style="opacity: 0.7;">Total Revenue</MudText>
+                        <MudText Typo="Typo.h4" Style="font-weight: 800;">$42,850</MudText>
+                        <MudText Typo="Typo.caption" Color="Color.Success">+12% from last month</MudText>
+                    </MudPaper>
+                </MudItem>
+                <MudItem xs="12">
+                    <MudPaper Class="pa-8 rounded-xl" Elevation="2">
+                        <MudText Typo="Typo.h6" Style="opacity: 0.7;">Active Listings</MudText>
+                        <MudText Typo="Typo.h4" Style="font-weight: 800;">8</MudText>
+                        <MudText Typo="Typo.caption">2 pending approval</MudText>
+                    </MudPaper>
+                </MudItem>
+                <MudItem xs="12">
+                    <MudPaper Class="pa-8 rounded-xl" Elevation="2">
+                        <MudText Typo="Typo.h6" Style="opacity: 0.7;" Class="mb-2">Incoming Requests</MudText>
+                        <div class="d-flex align-center gap-2">
+                            <MudBadge Content="3" Overlap="true" Color="Color.Error">
+                                <MudIcon Icon="@Icons.Material.Filled.Notifications" Size="Size.Large" Color="Color.Primary" />
+                            </MudBadge>
+                            <MudText Typo="Typo.body1" Class="ml-2">3 new booking requests need review.</MudText>
+                        </div>
+                    </MudPaper>
+                </MudItem>
+            </MudGrid>
+        </MudItem>
+
+        <!-- Active Listings Management -->
+        <MudItem xs="12">
+            <MudPaper Class="pa-8 rounded-xl" Elevation="2">
+                <div class="d-flex align-center justify-between mb-6">
+                    <MudText Typo="Typo.h5" Style="font-weight: 700;">My Listings</MudText>
+                    <MudTabs Color="Color.Primary" Variant="Variant.Text">
+                        <MudTabPanel Text="Active" />
+                        <MudTabPanel Text="Drafts" />
+                        <MudTabPanel Text="Completed" />
+                    </MudTabs>
+                </div>
+
+                <MudGrid>
+                    @for (int i = 1; i <= 3; i++)
+                    {
+                        <MudItem xs="12" sm="6" md="4">
+                            <MudCard Class="rounded-xl border-dashed">
+                                <MudCardContent>
+                                    <div class="d-flex gap-4">
+                                        <MudAvatar Square="true" Size="Size.Large" Src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=100&q=80" />
+                                        <div>
+                                            <MudText Typo="Typo.subtitle1" Style="font-weight: 700;">Alpine Experience @i</MudText>
+                                            <MudText Typo="Typo.caption">Updated 2 days ago</MudText>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-between mt-4">
+                                        <div>
+                                            <MudText Typo="Typo.caption" Class="mud-text-secondary">Views</MudText>
+                                            <MudText Typo="Typo.body2">1.2k</MudText>
+                                        </div>
+                                        <div>
+                                            <MudText Typo="Typo.caption" Class="mud-text-secondary">Bookings</MudText>
+                                            <MudText Typo="Typo.body2">45</MudText>
+                                        </div>
+                                        <div>
+                                            <MudText Typo="Typo.caption" Class="mud-text-secondary">Rating</MudText>
+                                            <MudText Typo="Typo.body2">⭐ 4.8</MudText>
+                                        </div>
+                                    </div>
+                                </MudCardContent>
+                                <MudCardActions>
+                                    <MudButton Variant="Variant.Text" Color="Color.Primary" Size="Size.Small">Edit</MudButton>
+                                    <MudButton Variant="Variant.Text" Color="Color.Default" Size="Size.Small">View Stats</MudButton>
+                                    <MudSpacer />
+                                    <MudSwitch T="bool" Value="true" Color="Color.Primary" Label="Live" />
+                                </MudCardActions>
+                            </MudCard>
+                        </MudItem>
+                    }
+                </MudGrid>
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+</MudContainer>
+
+@code {
+    private List<ChartSeries<double>> _series = new()
+    {
+        new ChartSeries<double> { Name = "Revenue", Data = new double[] { 10, 41, 35, 51, 49, 62, 69, 91, 148 } }
+    };
+    private string[] _labels = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep" };
+    private ChartOptions _chartOptions = new();
+}

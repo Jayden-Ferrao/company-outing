@@ -1,0 +1,40 @@
+@using MudBlazor
+
+@* Explore by Experience Type *@
+<div class="section-header text-center mt-32 mb-16">
+    <MudText Typo="Typo.h3" Class="section-title font-black">Explore by Experience Type</MudText>
+</div>
+
+<MudGrid Spacing="6">
+    @foreach (var type in _experienceTypes)
+    {
+        <MudItem xs="12" sm="6" md="4">
+            <div class="type-card rounded-2xl relative overflow-hidden cursor-pointer">
+                <MudImage Src="@type.Image" Alt="@type.Title" Class="type-img" />
+                <div class="type-overlay pa-10 d-flex flex-column align-start justify-end">
+                    <MudText Typo="Typo.h4" Class="type-title font-black">@type.Title</MudText>
+                    @if(type.Title == "Budget-Friendly Outings") {
+                        <MudLink Color="Color.Inherit" Underline="Underline.None" Class="explore-link mt-4 font-bold">Explore <MudIcon Icon="@Icons.Material.Filled.ArrowForward" Size="Size.Small" /></MudLink>
+                    }
+                </div>
+            </div>
+        </MudItem>
+    }
+</MudGrid>
+
+@code {
+    private List<ExperienceType> _experienceTypes = new()
+    {
+        new ExperienceType { Title = "Winter Retreats", Image = "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=800&q=80" },
+        new ExperienceType { Title = "Adventure Team Building", Image = "https://images.unsplash.com/photo-1533240332313-0db49b459ad6?auto=format&fit=crop&w=800&q=80" },
+        new ExperienceType { Title = "Innovation Workshops", Image = "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80" },
+        new ExperienceType { Title = "Luxury Conferences", Image = "https://images.unsplash.com/photo-1431540015161-0bf868a2d407?auto=format&fit=crop&w=800&q=80" },
+        new ExperienceType { Title = "Budget-Friendly Outings", Image = "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80" },
+        new ExperienceType { Title = "Large-Scale Corporate Events", Image = "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=800&q=80" }
+    };
+
+    public class ExperienceType {
+        public string Title { get; set; } = "";
+        public string Image { get; set; } = "";
+    }
+}

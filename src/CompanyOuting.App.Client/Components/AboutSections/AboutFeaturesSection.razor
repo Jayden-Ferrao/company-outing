@@ -1,0 +1,99 @@
+@using MudBlazor
+
+<div class="features-section-wrapper pt-24 pb-32">
+    <div class="text-center mb-16">
+        <h6 class="section-sup-title">WHY CHOOSE US</h6>
+        <h2 class="section-title">What Makes Us Different</h2>
+        <p class="section-subtitle">We don't just book venues — we craft unforgettable experiences tailored to your<br/>team's unique needs and goals</p>
+    </div>
+
+    <MudGrid Spacing="6">
+        @foreach (var feature in _features)
+        {
+            <MudItem xs="12" md="4">
+                <div class="f-card">
+                    <div class="f-icon-wrap mb-6">
+                        <MudIcon Icon="@feature.Icon" Style="font-size: 2rem; color: #0f172a;" />
+                    </div>
+                    <h3 class="f-title mb-4">@feature.Title</h3>
+                    <p class="f-desc">@feature.Description</p>
+                </div>
+            </MudItem>
+        }
+    </MudGrid>
+</div>
+
+<style>
+    .features-section-wrapper {
+        padding-top: 100px;
+        padding-bottom: 120px;
+    }
+
+    .section-sup-title {
+        font-size: 0.75rem;
+        font-weight: 800;
+        letter-spacing: 2px;
+        color: #64748b;
+        text-transform: uppercase;
+        margin-bottom: 16px;
+    }
+
+    .section-title {
+        font-size: 2.8rem;
+        font-weight: 800;
+        color: #0f172a;
+        margin-bottom: 24px;
+        letter-spacing: -0.5px;
+    }
+
+    .section-subtitle {
+        font-size: 1.1rem;
+        color: #64748b;
+        line-height: 1.6;
+    }
+
+    .f-card {
+        background-color: #ffffff;
+        border-radius: 8px; /* Slightly sharper look */
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+    }
+
+    .f-icon-wrap {
+        display: flex;
+        align-items: center;
+    }
+
+    .f-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #0f172a;
+    }
+
+    .f-desc {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: #64748b;
+    }
+</style>
+
+@code {
+    private List<FeatureItem> _features = new()
+    {
+        new FeatureItem { Icon = Icons.Material.Outlined.Language, Title = "Global Expertise", Description = "40+ years combined experience in hospitality and corporate events worldwide" },
+        new FeatureItem { Icon = Icons.Material.Outlined.TrackChanges, Title = "Tailored Concepts", Description = "Custom experiences designed around your team's culture and objectives" },
+        new FeatureItem { Icon = Icons.Material.Outlined.Verified, Title = "Verified Partners", Description = "Curated network of premium venues and trusted international providers" },
+        new FeatureItem { Icon = Icons.Material.Outlined.Group, Title = "Scalable Solutions", Description = "From intimate gatherings to large-scale corporate events (10-500+ people)" },
+        new FeatureItem { Icon = Icons.Material.Outlined.TaskAlt, Title = "End-to-End Service", Description = "Seamless planning from concept to execution with dedicated support" },
+        new FeatureItem { Icon = Icons.Material.Outlined.AutoAwesome, Title = "Extraordinary Venues", Description = "Access to exclusive locations from Nordic destinations to international hotspots" }
+    };
+
+    public class FeatureItem {
+        public string Icon { get; set; } = "";
+        public string Title { get; set; } = "";
+        public string Description { get; set; } = "";
+    }
+}

@@ -1,0 +1,82 @@
+@using MudBlazor
+
+<div class="about-stats-wrapper py-32">
+    <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="px-12">
+        <MudGrid Class="about-stats-container">
+            <MudItem xs="6" md="3" Class="text-center">
+                <div class="a-stat-num">
+                <span id="astat-exp">500</span><span>+</span>
+                </div>
+                <div class="a-stat-label">EXPERIENCES</div>
+            </MudItem>
+            <MudItem xs="6" md="3" Class="text-center">
+                <div class="a-stat-num">
+                <span id="astat-providers">50</span><span>+</span>
+                </div>
+                <div class="a-stat-label">VERIFIED PARTNERS</div>
+            </MudItem>
+            <MudItem xs="6" md="3" Class="text-center">
+                <div class="a-stat-num">
+                <span id="astat-countries">35</span>
+                </div>
+                <div class="a-stat-label">COUNTRIES</div>
+            </MudItem>
+            <MudItem xs="6" md="3" Class="text-center">
+                <div class="a-stat-num">
+                <span id="astat-years">40</span><span>+</span>
+                </div>
+                <div class="a-stat-label">YEARS EXPERIENCE</div>
+            </MudItem>
+        </MudGrid>
+    </MudContainer>
+</div>
+
+<style>
+    .about-stats-wrapper {
+        background-color: #ffffff;
+        padding-top: 100px;
+        padding-bottom: 100px;
+    }
+
+    .about-stats-container {
+        padding: 40px 0 0 0;
+    }
+
+    .a-stat-num {
+        font-size: 3.5rem;
+        font-weight: 900;
+        letter-spacing: -0.05em;
+        color: #0f172a;
+        line-height: 1;
+        margin-bottom: 12px;
+    }
+
+    .a-stat-label {
+        color: #64748b;
+        font-size: 0.85rem;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+    }
+</style>
+
+<script>
+    (function() {
+        var startAboutCounters = function() {
+            if (window.animateCounters) {
+                window.animateCounters([
+                    { id: "astat-exp",       value: 500 },
+                    { id: "astat-providers", value = 50  },
+                    { id: "astat-countries", value: 35  },
+                    { id: "astat-years",     value = 40  }
+                ]);
+            }
+        };
+
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", startAboutCounters);
+        } else {
+            setTimeout(startAboutCounters, 50);
+        }
+    })();
+</script>

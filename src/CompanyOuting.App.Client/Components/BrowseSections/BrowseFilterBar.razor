@@ -1,0 +1,145 @@
+@using MudBlazor
+
+<div class="fb-root">
+
+    @* ── Section 1 · White – Region picker ── *@
+    <div class="fb-region-panel">
+        <p class="fb-region-label">SELECT REGION</p>
+        <div class="fb-region-dropdown">
+            <span>All Regions</span>
+            <MudIcon Icon="@Icons.Material.Filled.KeyboardArrowDown" Size="Size.Small" />
+        </div>
+        <p class="fb-region-hint">Showing experiences from all regions</p>
+    </div>
+
+    @* ── Horizontal rule ── *@
+    <div class="fb-hr"></div>
+
+    @* ── Section 2 · Light-grey – Search bar ── *@
+    <div class="fb-search-panel">
+        <div class="fb-search-inner">
+            <div class="fb-toggle-link">Toggle Provider View (Test)</div>
+            <div class="fb-search-box">
+                <MudIcon Icon="@Icons.Material.Outlined.Search" Class="fb-search-icon" />
+                <input type="text"
+                       class="fb-search-input"
+                       placeholder="Search destinations, activities, or experiences..." />
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<style>
+    /* ─── root container bleeds to viewport edges ───────────────────────── */
+    .fb-root {
+        width: 100vw;
+        margin-left: calc(-50vw + 50%);
+        margin-right: calc(-50vw + 50%);
+        background: #fff;
+    }
+
+    /* ─── Region section ─────────────────────────────────────────────────── */
+    .fb-region-panel {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 40px 24px 24px;
+        background: #fff;
+    }
+
+    .fb-region-label {
+        font-size: 0.6rem;
+        font-weight: 800;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: #0f172a;
+        margin-bottom: 10px;
+    }
+
+    .fb-region-dropdown {
+        width: 100%;
+        max-width: 480px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border: 1.5px solid #1e293b;   /* Bold dark border matching design */
+        border-radius: 3px;
+        padding: 11px 14px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #0f172a;
+        cursor: pointer;
+        background: #fff;
+        margin-bottom: 10px;
+    }
+
+    .fb-region-hint {
+        font-size: 0.8rem;
+        color: #6366f1;               /* Indigo-ish link colour from design */
+        font-weight: 500;
+    }
+
+    /* ─── Divider ─────────────────────────────────────────────────────────── */
+    .fb-hr {
+        height: 1px;
+        background: #e2e8f0;
+        width: 100%;
+    }
+
+    /* ─── Search section ─────────────────────────────────────────────────── */
+    .fb-search-panel {
+        background: #f8fafc;          /* Very light grey as in design */
+        padding: 16px 24px 24px;
+    }
+
+    .fb-search-inner {
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    .fb-toggle-link {
+        text-align: right;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: #94a3b8;
+        margin-bottom: 10px;
+        cursor: pointer;
+    }
+
+    .fb-search-box {
+        position: relative;
+        width: 100%;
+    }
+
+    .fb-search-icon {
+        position: absolute !important;
+        left: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #94a3b8 !important;
+        font-size: 1.1rem !important;
+    }
+
+    .fb-search-input {
+        width: 100%;
+        border: 1px solid #e2e8f0;
+        border-radius: 4px;
+        padding: 13px 16px 13px 44px;
+        font-size: 0.88rem;
+        color: #475569;
+        background: #fff;
+        outline: none;
+        transition: border-color 0.2s;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .fb-search-input::placeholder {
+        color: #94a3b8;
+        font-weight: 400;
+    }
+
+    .fb-search-input:focus {
+        border-color: #6366f1;
+    }
+</style>

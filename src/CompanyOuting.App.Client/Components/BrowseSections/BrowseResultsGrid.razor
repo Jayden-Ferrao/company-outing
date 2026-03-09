@@ -1,0 +1,365 @@
+@using MudBlazor
+
+@* ── Results header ── *@
+<div class="rg-header">
+    <div class="rg-count">
+        <span class="rg-count-num">18</span>
+        <span class="rg-count-text">experiences found</span>
+    </div>
+    <div class="rg-sort">
+        <span class="rg-sort-label">SORT BY:</span>
+        <div class="rg-sort-select">
+            Most Popular
+            <MudIcon Icon="@Icons.Material.Filled.KeyboardArrowDown" Size="Size.Small" />
+        </div>
+    </div>
+</div>
+
+@* ── Cards grid ── *@
+<div class="rg-grid">
+    @foreach (var exp in _experiences)
+    {
+        <div class="ec-card">
+            @* Image *@
+            <div class="ec-img-wrap">
+                <img src="@exp.Image" alt="@exp.Title" class="ec-img" />
+                <div class="ec-top-badges">
+                    @if (exp.Featured)
+                    {
+                        <span class="ec-badge ec-feat">★ FEATURED</span>
+                    }
+                    <span class="ec-badge ec-season">@exp.Season</span>
+                </div>
+                <div class="ec-bottom-badges">
+                    <span class="ec-badge ec-rating">★ @exp.Rating <span class="ec-rating-count">(@exp.Reviews)</span></span>
+                </div>
+            </div>
+
+            @* Body *@
+            <div class="ec-body">
+                <div class="ec-verified">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2"><path d="M12 2L2 7v5c0 5.25 4.17 10.16 10 11.38C17.83 22.16 22 17.25 22 12V7L12 2z"/></svg>
+                    VERIFIED PROVIDER
+                </div>
+                <h3 class="ec-title">@exp.Title</h3>
+                <p class="ec-desc">@exp.Description</p>
+
+                <div class="ec-meta">
+                    <span>
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        @exp.Location
+                    </span>
+                    <span>
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+                        @exp.People people
+                    </span>
+                </div>
+                <p class="ec-bestfor">Best for @exp.People person teams</p>
+
+                <div class="ec-price-section">
+                    <p class="ec-price-label">STARTING FROM</p>
+                    <p class="ec-price">$@exp.Price <span class="ec-price-per">/person</span></p>
+                </div>
+            </div>
+
+            @* CTA *@
+            <div class="ec-footer">
+                <button class="ec-view-btn">VIEW EXPERIENCE</button>
+            </div>
+        </div>
+    }
+</div>
+
+@* ── Pagination ── *@
+<div class="rg-pagination">
+    <button class="pg-btn pg-prev">PREVIOUS</button>
+    <button class="pg-btn pg-active">1</button>
+    <button class="pg-btn">2</button>
+    <button class="pg-btn pg-next">NEXT</button>
+</div>
+
+@code {
+    record Experience(string Title, string Description, string Image, string Location, string People, string Season, bool Featured, double Rating, int Reviews, int Price);
+
+    List<Experience> _experiences = new()
+    {
+        new("Culinary Team Experience",       "Cooking masterclass in Tuscany with wine tasting",                    "https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=800&auto=format&fit=crop", "Tuscany",          "15-80",   "Spring",  true,  4.9, 201, 980),
+        new("Wellness & Mindfulness Retreat", "Wellness and mindfulness retreat in Bali",                            "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=800&auto=format&fit=crop", "Ubud",             "10-50",   "All Year",true,  4.9, 167, 920),
+        new("Supercharge Your Conference at...","Industrial-chic conference venue with advanced tech...",            "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=800&auto=format&fit=crop", "Stavanger",        "50-500",  "All Year",true,  4.8, 143, 1150),
+        new("Nordic Leadership Summit",        "Leadership workshop in a mountain retreat",                          "https://images.unsplash.com/photo-1519834785169-98a25a1de63e?q=80&w=800&auto=format&fit=crop", "Bergen",           "20-100",  "Winter",  false, 4.7,  92,  850),
+        new("Mediterranean Tech Offsite",      "Tech offsite with workshops and evening sailing",                    "https://images.unsplash.com/photo-1527631746610-bca00a040d60?q=80&w=800&auto=format&fit=crop", "Barcelona",        "15-60",   "Summer",  false, 4.8,  77,  650),
+        new("Alpine Adventure Retreat",        "High-altitude team building with hiking and zip-lining",             "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=800&auto=format&fit=crop", "Innsbruck",        "10-40",   "Summer",  false, 4.6,  58,  950),
+        new("Mediterranean Yacht Conference",  "Luxury yacht retreat for executive teams",                           "https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?q=80&w=800&auto=format&fit=crop", "Mediterranean Sea","10-50",   "Summer",  true,  4.9,  84, 2400),
+        new("Sustainability & Nature Retreat", "Eco-conscious retreat with CSR focus in Costa Rica",                 "https://images.unsplash.com/photo-1501854140801-50d01698950b?q=80&w=800&auto=format&fit=crop", "Costa Rica",       "15-70",   "All Year",false, 4.8,  89,  890),
+        new("Skyline Strategy Sessions",       "Premium 14th floor venue with panoramic fjord views",                "https://images.unsplash.com/photo-1486325212027-8081e485255e?q=80&w=800&auto=format&fit=crop", "Stavanger",        "20-200",  "All Year",true,  4.8,  94, 1450),
+    };
+}
+
+<style>
+    /* ─── Results header ─────────────────────────────── */
+    .rg-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 28px;
+    }
+
+    .rg-count-num {
+        font-size: 1.9rem;
+        font-weight: 800;
+        color: #0f172a;
+    }
+
+    .rg-count-text {
+        font-size: 1rem;
+        font-weight: 400;
+        color: #64748b;
+        margin-left: 8px;
+    }
+
+    .rg-sort {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .rg-sort-label {
+        font-size: 0.7rem;
+        font-weight: 800;
+        letter-spacing: 1.5px;
+        color: #64748b;
+    }
+
+    .rg-sort-select {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        border: 1px solid #cbd5e1;
+        border-radius: 4px;
+        padding: 8px 14px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #334155;
+        background: #fff;
+        cursor: pointer;
+    }
+
+    /* ─── Cards grid ─────────────────────────────────── */
+    .rg-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+        margin-bottom: 48px;
+    }
+
+    @@media (max-width: 1024px) { .rg-grid { grid-template-columns: repeat(2, 1fr); } }
+    @@media (max-width: 640px)  { .rg-grid { grid-template-columns: 1fr; }           }
+
+    /* ─── Card ───────────────────────────────────────── */
+    .ec-card {
+        background: #fff;
+        border: 1px solid #e2e8f0;
+        border-radius: 4px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+
+    .ec-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+    }
+
+    /* ─── Card image ─────────────────────────────────── */
+    .ec-img-wrap {
+        position: relative;
+        height: 210px;
+        overflow: hidden;
+    }
+
+    .ec-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    .ec-top-badges {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        right: 12px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .ec-bottom-badges {
+        position: absolute;
+        bottom: 12px;
+        left: 12px;
+    }
+
+    .ec-badge {
+        background: rgba(255,255,255,0.95);
+        padding: 5px 9px;
+        border-radius: 3px;
+        font-size: 0.62rem;
+        font-weight: 800;
+        letter-spacing: 0.8px;
+        color: #0f172a;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+        display: inline-flex;
+        align-items: center;
+        gap: 3px;
+    }
+
+    .ec-rating-count {
+        color: #94a3b8;
+        font-weight: 600;
+    }
+
+    /* ─── Card body ──────────────────────────────────── */
+    .ec-body {
+        padding: 20px 20px 12px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .ec-verified {
+        font-size: 0.6rem;
+        font-weight: 800;
+        letter-spacing: 1px;
+        color: #64748b;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        margin-bottom: 10px;
+    }
+
+    .ec-title {
+        font-size: 1.1rem;
+        font-weight: 800;
+        color: #0f172a;
+        line-height: 1.35;
+        margin-bottom: 6px;
+        min-height: 44px;
+    }
+
+    .ec-desc {
+        font-size: 0.82rem;
+        color: #64748b;
+        line-height: 1.6;
+        margin-bottom: 16px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .ec-meta {
+        display: flex;
+        gap: 16px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: #64748b;
+        margin-bottom: 4px;
+    }
+
+    .ec-meta span {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .ec-meta svg { opacity: 0.5; flex-shrink: 0; }
+
+    .ec-bestfor {
+        font-size: 0.72rem;
+        color: #94a3b8;
+        font-weight: 500;
+        margin-bottom: 0;
+    }
+
+    /* ─── Price ──────────────────────────────────────── */
+    .ec-price-section {
+        margin-top: auto;
+        padding-top: 20px;
+    }
+
+    .ec-price-label {
+        font-size: 0.58rem;
+        font-weight: 800;
+        letter-spacing: 1.5px;
+        color: #64748b;
+        margin-bottom: 2px;
+    }
+
+    .ec-price {
+        font-size: 1.85rem;
+        font-weight: 900;
+        color: #0f172a;
+        line-height: 1;
+    }
+
+    .ec-price-per {
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: #64748b;
+        margin-left: 2px;
+    }
+
+    /* ─── Card footer / CTA ──────────────────────────── */
+    .ec-footer {
+        padding: 0 20px 20px;
+    }
+
+    .ec-view-btn {
+        width: 100%;
+        background: #0f172a;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        padding: 14px 0;
+        font-size: 0.75rem;
+        font-weight: 800;
+        letter-spacing: 1.5px;
+        cursor: pointer;
+        transition: background 0.15s;
+    }
+
+    .ec-view-btn:hover { background: #1e293b; }
+
+    /* ─── Pagination ─────────────────────────────────── */
+    .rg-pagination {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        padding-top: 16px;
+    }
+
+    .pg-btn {
+        border: 1px solid #e2e8f0;
+        border-radius: 3px;
+        padding: 8px 18px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        color: #475569;
+        background: #fff;
+        cursor: pointer;
+        transition: all 0.15s;
+    }
+
+    .pg-btn:hover { border-color: #94a3b8; }
+
+    .pg-active {
+        background: #0f172a;
+        color: #fff;
+        border-color: #0f172a;
+    }
+
+    .pg-prev, .pg-next { color: #94a3b8; }
+</style>

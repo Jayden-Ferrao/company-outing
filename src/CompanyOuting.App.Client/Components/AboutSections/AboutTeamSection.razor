@@ -1,0 +1,152 @@
+@using MudBlazor
+
+<div class="team-section-wrapper pt-32 pb-32">
+    <div class="text-center mb-16" style="max-width: 700px; margin: 0 auto 64px auto;">
+        <div class="d-flex align-center justify-center gap-2 mb-4">
+            <MudIcon Icon="@Icons.Material.Outlined.FavoriteBorder" Size="Size.Small" Style="color: #64748b;" />
+            <span class="section-sup-title mb-0">MEET THE TEAM</span>
+        </div>
+        <h2 class="section-title">Partners in Crime</h2>
+        <p class="section-subtitle">After spending most of our careers in hospitality and events, we're creating something different – extraordinary group experiences that bring people together.</p>
+    </div>
+
+    <MudGrid Spacing="6" Justify="Justify.Center">
+        <MudItem xs="12" md="6" Class="d-flex flex-column gap-6">
+            <div class="team-photo-wrap">
+                <div class="team-photo" style="background-image: url('https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=800&auto=format&fit=crop&grayscale=true');"></div>
+                <div class="team-photo-overlay">
+                    <div class="team-photo-content">
+                        <div class="t-p-name">Rudi Clausen</div>
+                        <div class="t-p-role">Director of Good Vibes</div>
+                        <div class="t-p-contact">Tel: (47) 934 92 596</div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h3 class="t-b-name">Rudi</h3>
+                <h6 class="t-b-role">CO-FOUNDER &amp; EXPERIENCE DIRECTOR</h6>
+                <p class="t-b-desc">With 20+ years in hospitality and event management, Rudi brings a global perspective to corporate experiences. His expertise spans from intimate boardroom gatherings to large-scale international events.</p>
+            </div>
+        </MudItem>
+
+        <MudItem xs="12" md="6" Class="d-flex flex-column gap-6">
+            <div class="team-photo-wrap">
+                <div class="team-photo" style="background-image: url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800&auto=format&fit=crop&grayscale=true');"></div>
+                <div class="team-photo-overlay">
+                    <div class="team-photo-content">
+                        <div class="t-p-name">Astrid Eik</div>
+                        <div class="t-p-role">Director of Lasting Moments</div>
+                        <div class="t-p-contact">Tel: (+47) 476 57 090</div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h3 class="t-b-name">Astrid</h3>
+                <h6 class="t-b-role">CO-FOUNDER &amp; CREATIVE DIRECTOR</h6>
+                <p class="t-b-desc">Astrid's background in curated travel and destination marketing brings a unique creative edge to every outing. She specializes in designing experiences that align with company culture and team dynamics.</p>
+            </div>
+        </MudItem>
+    </MudGrid>
+</div>
+
+<style>
+    .team-section-wrapper {
+        padding-top: 100px;
+        padding-bottom: 150px;
+    }
+
+    .section-sup-title {
+        font-size: 0.75rem;
+        font-weight: 800;
+        letter-spacing: 2px;
+        color: #64748b;
+        text-transform: uppercase;
+    }
+
+    .section-title {
+        font-size: 2.8rem;
+        font-weight: 800;
+        color: #0f172a;
+        margin-bottom: 24px;
+        letter-spacing: -0.5px;
+    }
+
+    .section-subtitle {
+        font-size: 1.1rem;
+        color: #64748b;
+        line-height: 1.6;
+    }
+
+    .team-photo-wrap {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        overflow: hidden;
+        border-radius: 4px;
+    }
+
+    .team-photo {
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        /* Simulated B&W from the reference */
+        filter: grayscale(100%) contrast(1.1); 
+    }
+
+    .team-photo-overlay {
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+        width: 100%;
+        height: 50%;
+        background: linear-gradient(0deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%);
+        display: flex;
+        align-items: flex-end;
+        padding: 32px;
+    }
+
+    .team-photo-content {
+        color: white;
+    }
+
+    .t-p-name {
+        font-size: 2.2rem;
+        font-weight: 800;
+        letter-spacing: -1px;
+        margin-bottom: 4px;
+    }
+
+    .t-p-role {
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin-bottom: 4px;
+    }
+
+    .t-p-contact {
+        font-size: 1.1rem;
+        font-weight: 700;
+    }
+
+    .t-b-name {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: #0f172a;
+        margin-bottom: 8px;
+    }
+
+    .t-b-role {
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        color: #64748b;
+        text-transform: uppercase;
+        margin-bottom: 16px;
+    }
+
+    .t-b-desc {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: #4b5563;
+    }
+</style>

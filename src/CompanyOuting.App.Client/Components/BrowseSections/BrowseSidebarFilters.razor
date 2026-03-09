@@ -1,0 +1,223 @@
+@using MudBlazor
+
+<div class="sb-root">
+    <h4 class="sb-main-title">FILTERS</h4>
+
+    @* ── CATEGORIES ── *@
+    <div class="sb-group">
+        <div class="sb-group-header">
+            <span class="sb-group-title">CATEGORIES</span>
+            <MudIcon Icon="@Icons.Material.Filled.KeyboardArrowUp" Size="Size.Small" Class="sb-chevron" />
+        </div>
+        @foreach (var cat in _categories)
+        {
+            <label class="sb-check-row">
+                <input type="checkbox" class="sb-checkbox" />
+                <span class="sb-check-label">@cat</span>
+            </label>
+        }
+    </div>
+
+    <div class="sb-divider"></div>
+
+    @* ── SEASONS ── *@
+    <div class="sb-group">
+        <div class="sb-group-header">
+            <span class="sb-group-title">SEASONS</span>
+            <MudIcon Icon="@Icons.Material.Filled.KeyboardArrowUp" Size="Size.Small" Class="sb-chevron" />
+        </div>
+        @foreach (var season in _seasons)
+        {
+            <label class="sb-check-row">
+                <input type="checkbox" class="sb-checkbox" />
+                <span class="sb-check-label">@season</span>
+            </label>
+        }
+    </div>
+
+    <div class="sb-divider"></div>
+
+    @* ── PRICE RANGE ── *@
+    <div class="sb-group">
+        <div class="sb-group-header">
+            <span class="sb-group-title">PRICE RANGE</span>
+            <MudIcon Icon="@Icons.Material.Filled.KeyboardArrowUp" Size="Size.Small" Class="sb-chevron" />
+        </div>
+        <div class="sb-price-row">
+            <div class="sb-price-box">
+                <input type="number" class="sb-price-input" value="0" min="0" />
+                <div class="sb-price-arrows">
+                    <MudIcon Icon="@Icons.Material.Filled.ArrowDropUp" Size="Size.Small" Class="sb-arr-icon" />
+                    <MudIcon Icon="@Icons.Material.Filled.ArrowDropDown" Size="Size.Small" Class="sb-arr-icon" />
+                </div>
+            </div>
+            <span class="sb-price-sep">-</span>
+            <div class="sb-price-box">
+                <input type="number" class="sb-price-input" value="3000" min="0" />
+                <div class="sb-price-arrows">
+                    <MudIcon Icon="@Icons.Material.Filled.ArrowDropUp" Size="Size.Small" Class="sb-arr-icon" />
+                    <MudIcon Icon="@Icons.Material.Filled.ArrowDropDown" Size="Size.Small" Class="sb-arr-icon" />
+                </div>
+            </div>
+        </div>
+        <p class="sb-price-caption">PRICE PER PERSON</p>
+    </div>
+
+    <div class="sb-divider"></div>
+
+    <button class="sb-clear-btn">CLEAR ALL FILTERS</button>
+</div>
+
+@code {
+    string[] _categories = { "Team Building", "Adventure", "Conference", "Workshop", "Culinary", "Tech", "Leadership", "Wellness" };
+    string[] _seasons    = { "All Year", "Spring", "Summer", "Fall", "Winter" };
+}
+
+<style>
+    .sb-root {
+        background: #fff;
+        border: 1px solid #e2e8f0;
+        border-radius: 4px;
+        padding: 28px 24px 24px;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .sb-main-title {
+        font-size: 1rem;
+        font-weight: 800;
+        color: #0f172a;
+        letter-spacing: 0.5px;
+        margin-bottom: 28px;
+    }
+
+    /* ── Group header ── */
+    .sb-group { margin-bottom: 8px; }
+
+    .sb-group-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 14px;
+    }
+
+    .sb-group-title {
+        font-size: 0.68rem;
+        font-weight: 800;
+        letter-spacing: 1.5px;
+        color: #0f172a;
+    }
+
+    .sb-chevron {
+        color: #94a3b8 !important;
+    }
+
+    /* ── Checkboxes ── */
+    .sb-check-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 10px;
+        cursor: pointer;
+    }
+
+    .sb-checkbox {
+        width: 14px;
+        height: 14px;
+        border: 1.5px solid #cbd5e1;
+        border-radius: 3px;
+        accent-color: #0f172a;
+        cursor: pointer;
+        flex-shrink: 0;
+    }
+
+    .sb-check-label {
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: #334155;
+    }
+
+    /* ── Divider ── */
+    .sb-divider {
+        height: 1px;
+        background: #e2e8f0;
+        margin: 20px 0;
+    }
+
+    /* ── Price range ── */
+    .sb-price-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 8px;
+    }
+
+    .sb-price-box {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        border: 1px solid #cbd5e1;
+        border-radius: 3px;
+        overflow: hidden;
+    }
+
+    .sb-price-input {
+        flex: 1;
+        border: none;
+        outline: none;
+        padding: 7px 8px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: #0f172a;
+        width: 0;           /* Allow flex to control width */
+    }
+
+    /* Remove number arrows on Chrome/Safari */
+    .sb-price-input::-webkit-inner-spin-button,
+    .sb-price-input::-webkit-outer-spin-button { -webkit-appearance: none; }
+
+    .sb-price-arrows {
+        display: flex;
+        flex-direction: column;
+        background: #f1f5f9;
+        border-left: 1px solid #e2e8f0;
+        cursor: pointer;
+    }
+
+    .sb-arr-icon {
+        color: #94a3b8 !important;
+        font-size: 0.75rem !important;
+        display: block;
+        height: 14px !important;
+    }
+
+    .sb-price-sep {
+        font-weight: 700;
+        color: #475569;
+    }
+
+    .sb-price-caption {
+        font-size: 0.6rem;
+        font-weight: 800;
+        letter-spacing: 1.5px;
+        color: #94a3b8;
+        text-transform: uppercase;
+    }
+
+    /* ── Clear button ── */
+    .sb-clear-btn {
+        width: 100%;
+        border: 1.5px solid #cbd5e1;
+        border-radius: 3px;
+        padding: 12px 0;
+        font-size: 0.75rem;
+        font-weight: 800;
+        letter-spacing: 1.5px;
+        color: #0f172a;
+        background: transparent;
+        cursor: pointer;
+        transition: background 0.15s;
+        margin-top: 8px;
+    }
+
+    .sb-clear-btn:hover { background: #f1f5f9; }
+</style>

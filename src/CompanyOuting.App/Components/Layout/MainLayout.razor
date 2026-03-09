@@ -1,0 +1,203 @@
+@inherits LayoutComponentBase
+@using CompanyOuting.App.Client.Components.Layout
+@using MudBlazor
+
+<MudLayout>
+    <AppBarCustom />
+
+    <MudMainContent>
+        @Body
+    </MudMainContent>
+
+    <div class="footer-block py-24 px-12">
+        <MudContainer MaxWidth="MaxWidth.Large">
+            <div class="footer-branding mb-16 d-flex flex-column align-center justify-center">
+                <div class="footer-logo-box text-center">
+                    <div class="f-top d-flex align-center justify-center gap-3 mb-2">
+                        <span class="f-line"></span>
+                        <span class="f-company">COMPANY</span>
+                        <span class="f-line"></span>
+                    </div>
+                    <div class="f-bottom">
+                        <span class="f-outing">OUTING</span>
+                        <MudIcon Icon="@Icons.Material.Filled.AutoAwesome" Size="Size.Large" Class="f-sparkle" />
+                    </div>
+                </div>
+            </div>
+
+            <MudGrid Class="mt-12 pb-16">
+                <MudItem xs="12" md="4">
+                    <MudText Typo="Typo.h6" Class="footer-cat-title mb-6">COMPANY</MudText>
+                    <div class="d-flex flex-column gap-3 footer-links">
+                        <MudLink Class="f-link">About Us</MudLink>
+                        <MudLink Class="f-link">Experiences</MudLink>
+                        <MudLink Class="f-link">Become a Provider</MudLink>
+                    </div>
+                </MudItem>
+                <MudItem xs="12" md="4">
+                    <MudText Typo="Typo.h6" Class="footer-cat-title mb-6">SUPPORT</MudText>
+                    <div class="d-flex flex-column gap-3 footer-links">
+                        <MudLink Class="f-link">Contact</MudLink>
+                        <MudLink Class="f-link">24/7 Support</MudLink>
+                        <MudLink Class="f-link email">hello@companyouting.ai</MudLink>
+                    </div>
+                </MudItem>
+                <MudItem xs="12" md="4">
+                    <MudText Typo="Typo.h6" Class="footer-cat-title mb-6">LEGAL</MudText>
+                    <div class="d-flex flex-column gap-3 footer-links mb-8">
+                        <MudLink Class="f-link">Terms of Service</MudLink>
+                        <MudLink Class="f-link">Privacy Policy</MudLink>
+                    </div>
+                    <div class="footer-address">
+                        <MudText Typo="Typo.body2">Funky FOMO AS</MudText>
+                        <MudText Typo="Typo.body2">Grenseveien 21</MudText>
+                        <MudText Typo="Typo.body2">4313 Sandnes, Norway</MudText>
+                    </div>
+                </MudItem>
+            </MudGrid>
+
+            <MudDivider Class="my-8 footer-divider" />
+
+            <div class="footer-bottom-grid pt-4 pb-8">
+                <MudText Typo="Typo.body2" Class="f-copyright">© 2026 Company Outing AS. All rights reserved.</MudText>
+                <div class="d-flex justify-center gap-6 social-row">
+                    <MudIconButton Icon="@Icons.Custom.Brands.Facebook" Color="Color.Inherit" Size="Size.Small" />
+                    <MudIconButton Icon="@Icons.Custom.Brands.Instagram" Color="Color.Inherit" Size="Size.Small" />
+                    <MudIconButton Icon="@Icons.Custom.Brands.LinkedIn" Color="Color.Inherit" Size="Size.Small" />
+                </div>
+                <MudText Typo="Typo.body2" Class="f-powered">Powered by <span style="font-weight: 800;">Kilowott</span></MudText>
+            </div>
+        </MudContainer>
+    </div>
+</MudLayout>
+
+<style>
+    .footer-block {
+        background-color: #0f172a;
+        color: white;
+        width: 100%;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .f-line {
+        height: 2px;
+        width: 30px;
+        background-color: white;
+        opacity: 0.3;
+    }
+
+    .f-company {
+        font-size: 1rem;
+        font-weight: 800;
+        letter-spacing: 4px;
+        opacity: 0.8;
+    }
+
+    .f-outing {
+        font-size: 6.5rem;
+        font-weight: 950;
+        letter-spacing: -3px;
+        line-height: 0.9;
+    }
+
+    .f-sparkle {
+        color: white !important;
+        opacity: 0.6;
+        margin-left: -5px;
+        margin-top: 15px;
+        font-size: 2.5rem !important;
+    }
+
+    .footer-cat-title {
+        font-weight: 900 !important;
+        letter-spacing: 1px;
+        font-size: 1rem !important;
+        opacity: 0.9;
+    }
+
+    .f-link {
+        color: white !important;
+        opacity: 0.6;
+        text-decoration: none !important;
+        font-weight: 500;
+        font-size: 1rem !important;
+        transition: opacity 0.3s;
+    }
+
+    .f-link:hover { opacity: 1; }
+    .f-link.email { opacity: 0.8; }
+
+    .footer-address {
+        opacity: 0.6;
+        font-weight: 500;
+        line-height: 1.6;
+    }
+
+    .footer-divider {
+        background-color: rgba(255,255,255,0.1) !important;
+    }
+
+    .footer-bottom-grid {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+        width: 100%;
+    }
+
+    .f-copyright {
+        opacity: 0.6;
+        font-weight: 500;
+        text-align: left;
+    }
+
+    .f-powered {
+        opacity: 0.6;
+        font-weight: 500;
+        text-align: right;
+    }
+
+    .social-row .mud-icon-button {
+        background-color: transparent !important;
+    }
+
+    .social-row .mud-icon-button:hover {
+        opacity: 0.8;
+    }
+</style>
+
+<MudThemeProvider Theme="_theme" IsDarkMode="false" />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+@code {
+    private MudTheme _theme = new()
+    {
+        PaletteLight = new PaletteLight()
+        {
+            Primary = "#131416", // Deep Black/Navy
+            Secondary = "#E2E8F0", 
+            Tertiary = "#43D9AD",
+            AppbarBackground = "#F9FAF5", // Off-white/Cream background
+            Background = "#FFFFFF",
+            Surface = "#F9FAF5",
+            DrawerBackground = "#F9FAF5",
+            TextPrimary = "#131416",
+            TextSecondary = "#64748B"
+        },
+        LayoutProperties = new LayoutProperties()
+        {
+            DefaultBorderRadius = "4px", // Sharper corners for B2B feel
+            AppbarHeight = "80px"
+        }
+    };
+}
+
+<style>
+    * {
+        font-family: 'Outfit', sans-serif !important;
+    }
+    .mud-main-content {
+        padding-top: 0 !important;
+        background-color: #ffffff;
+    }
+</style>
