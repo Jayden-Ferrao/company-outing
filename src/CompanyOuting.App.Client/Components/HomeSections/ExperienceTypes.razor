@@ -13,9 +13,7 @@
                 <MudImage Src="@type.Image" Alt="@type.Title" Class="type-img" />
                 <div class="type-overlay pa-10 d-flex flex-column align-start justify-end">
                     <MudText Typo="Typo.h4" Class="type-title font-black">@type.Title</MudText>
-                    @if(type.Title == "Budget-Friendly Outings") {
-                        <MudLink Color="Color.Inherit" Underline="Underline.None" Class="explore-link mt-4 font-bold">Explore <MudIcon Icon="@Icons.Material.Filled.ArrowForward" Size="Size.Small" /></MudLink>
-                    }
+                    <MudLink Href="/marketplace" Color="Color.Inherit" Underline="Underline.None" Class="explore-link mt-4 font-bold">Explore <MudIcon Icon="@Icons.Material.Filled.ArrowForward" Size="Size.Small" /></MudLink>
                 </div>
             </div>
         </MudItem>
@@ -38,3 +36,21 @@
         public string Image { get; set; } = "";
     }
 }
+
+<style>
+    .explore-link,
+    .explore-link:visited,
+    .explore-link:hover,
+    .explore-link:focus,
+    .explore-link:active {
+        color: #ffffff !important;
+        text-decoration: none !important;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .explore-link::selection,
+    .explore-link *::selection {
+        background: transparent;
+        color: #ffffff;
+    }
+}</style>
