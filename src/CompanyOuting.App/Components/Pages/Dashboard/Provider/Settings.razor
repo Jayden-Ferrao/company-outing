@@ -1,0 +1,373 @@
+@page "/dashboard/settings"
+@page "/provider/settings"
+@layout CompanyOuting.App.Components.Layout.ProviderLayout
+
+@inject IJSRuntime JsRuntime
+@inject NavigationManager Navigation
+@inject UserSessionService Session
+@inject ISnackbar Snackbar
+
+<PageTitle>Settings - Company Outing</PageTitle>
+
+@if (_isReady)
+{
+    <div class="provider-settings-page">
+        <div class="provider-settings-shell">
+            <aside class="provider-sidebar">
+                <nav class="provider-sidebar-nav">
+                    @foreach (var item in _navItems)
+                    {
+                        <a href="@item.Href" class="provider-nav-link @(item.IsActive ? "is-active" : string.Empty)">
+                            <span class="provider-nav-icon">@item.Icon</span>
+                            <span>@item.Label</span>
+                        </a>
+                    }
+                </nav>
+            </aside>
+
+            <section class="provider-main">
+                <EditForm Model="_settings" OnValidSubmit="SaveSettings">
+                    <DataAnnotationsValidator />
+
+                    <section class="provider-settings-section">
+                        <h1>Company Information</h1>
+
+                        <div class="provider-settings-field">
+                            <label>COMPANY LOGO</label>
+                            <div class="provider-logo-row">
+                                <img src="@_settings.LogoUrl" alt="Company logo" class="provider-logo-thumb" />
+                                <div class="provider-logo-upload">
+                                    <span class="provider-logo-upload-icon">⇪</span>
+                                    <strong>Click to upload new logo</strong>
+                                    <span>PNG, JPG up to 5MB</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="provider-settings-field">
+                            <label>COMPANY NAME</label>
+                            <InputText @bind-Value="_settings.CompanyName" class="provider-settings-input" />
+                        </div>
+
+                        <div class="provider-settings-field">
+                            <label>COMPANY DESCRIPTION</label>
+                            <InputTextArea @bind-Value="_settings.CompanyDescription" class="provider-settings-input provider-settings-textarea" />
+                        </div>
+
+                        <div class="provider-settings-field">
+                            <label>WEBSITE</label>
+                            <InputText @bind-Value="_settings.Website" class="provider-settings-input" />
+                        </div>
+                    </section>
+
+                    <section class="provider-settings-section">
+                        <h2>Contact Information</h2>
+
+                        <div class="provider-settings-field">
+                            <label>EMAIL</label>
+                            <InputText @bind-Value="_settings.Email" class="provider-settings-input" />
+                        </div>
+
+                        <div class="provider-settings-field">
+                            <label>PHONE</label>
+                            <InputText @bind-Value="_settings.Phone" class="provider-settings-input" />
+                        </div>
+
+                        <div class="provider-settings-field">
+                            <label>BUSINESS ADDRESS</label>
+                            <InputTextArea @bind-Value="_settings.Address" class="provider-settings-input provider-settings-textarea" />
+                        </div>
+                    </section>
+
+                    <section class="provider-settings-section">
+                        <h2>Account Security</h2>
+
+                        <div class="provider-settings-field">
+                            <label>CURRENT PASSWORD</label>
+                            <InputText @bind-Value="_settings.CurrentPassword" type="password" class="provider-settings-input" placeholder="Enter current password" />
+                        </div>
+
+                        <div class="provider-settings-field">
+                            <label>NEW PASSWORD</label>
+                            <InputText @bind-Value="_settings.NewPassword" type="password" class="provider-settings-input" placeholder="Enter new password" />
+                        </div>
+
+                        <div class="provider-settings-field">
+                            <label>CONFIRM NEW PASSWORD</label>
+                            <InputText @bind-Value="_settings.ConfirmPassword" type="password" class="provider-settings-input" placeholder="Confirm new password" />
+                        </div>
+                    </section>
+
+                    <div class="provider-settings-actions">
+                        <button type="button" class="provider-settings-cancel" @onclick="Cancel">Cancel</button>
+                        <button type="submit" class="provider-settings-save">Save Changes</button>
+                    </div>
+                </EditForm>
+            </section>
+        </div>
+    </div>
+}
+
+@code {
+    private bool _isReady;
+
+    private readonly ProviderSettingsModel _settings = new()
+    {
+        LogoUrl = "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=300&auto=format&fit=crop",
+        CompanyName = "Alpine Adventures Co.",
+        CompanyDescription = "Leading provider of mountain-based team building experiences",
+        Website = "https://alpineadventures.com",
+        Email = "contact@alpineadventures.com",
+        Phone = "+41 123 456 789",
+        Address = "123 Mountain Road, Swiss Alps, Switzerland"
+    };
+
+    private readonly List<DashboardNavItem> _navItems =
+    [
+        new("⌘", "Dashboard", "/dashboard", false),
+        new("◫", "My Packages", "/dashboard/packages", false),
+        new("☷", "Bookings", "/dashboard/bookings", false),
+        new("⚙", "Settings", "/dashboard/settings", true)
+    ];
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+        {
+            return;
+        }
+
+        await Session.EnsureLoadedAsync(JsRuntime);
+
+        if (!Session.IsProvider)
+        {
+            Navigation.NavigateTo("/login");
+            return;
+        }
+
+        _isReady = true;
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private void SaveSettings()
+    {
+        Snackbar.Add("Settings saved.", Severity.Success);
+    }
+
+    private void Cancel()
+    {
+        Navigation.NavigateTo("/dashboard");
+    }
+
+    private sealed class ProviderSettingsModel
+    {
+        public string LogoUrl { get; set; } = string.Empty;
+        public string CompanyName { get; set; } = string.Empty;
+        public string CompanyDescription { get; set; } = string.Empty;
+        public string Website { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public string Phone { get; set; } = string.Empty;
+        public string Address { get; set; } = string.Empty;
+        public string CurrentPassword { get; set; } = string.Empty;
+        public string NewPassword { get; set; } = string.Empty;
+        public string ConfirmPassword { get; set; } = string.Empty;
+    }
+
+    private sealed record DashboardNavItem(string Icon, string Label, string Href, bool IsActive);
+}
+
+<style>
+    .provider-settings-page {
+        background: #eef2f6;
+    }
+
+    .provider-settings-shell {
+        display: grid;
+        grid-template-columns: 280px minmax(0, 1fr);
+        min-height: calc(100vh - 100px);
+    }
+
+    .provider-sidebar {
+        padding: 28px 0 32px;
+        background: #f9fbfc;
+        border-right: 1px solid #d9e1ea;
+    }
+
+    .provider-sidebar-nav {
+        display: flex;
+        flex-direction: column;
+        padding-top: 24px;
+    }
+
+    .provider-nav-link {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 18px 24px;
+        color: #5b6b84;
+        text-decoration: none;
+        font-size: 0.96rem;
+        font-weight: 800;
+        letter-spacing: 0.6px;
+    }
+
+    .provider-nav-link.is-active {
+        background: #eef2f7;
+        color: #0f172a;
+    }
+
+    .provider-nav-icon {
+        width: 22px;
+        text-align: center;
+        color: #64748b;
+    }
+
+    .provider-main {
+        padding: 24px 18px 48px;
+    }
+
+    .provider-settings-section {
+        margin-bottom: 26px;
+        padding: 18px;
+        background: #ffffff;
+        border: 1px solid #d9e1ea;
+    }
+
+    .provider-settings-section h1,
+    .provider-settings-section h2 {
+        margin: 0 0 18px;
+        color: #0f172a;
+        font-size: 1.8rem;
+        font-weight: 900;
+        letter-spacing: -0.6px;
+    }
+
+    .provider-settings-field {
+        margin-bottom: 16px;
+    }
+
+    .provider-settings-field label {
+        display: block;
+        margin-bottom: 10px;
+        color: #172033;
+        font-size: 0.8rem;
+        font-weight: 900;
+        letter-spacing: 0.8px;
+    }
+
+    .provider-logo-row {
+        display: grid;
+        grid-template-columns: 64px minmax(0, 1fr);
+        gap: 18px;
+        align-items: center;
+    }
+
+    .provider-logo-thumb {
+        width: 64px;
+        height: 64px;
+        object-fit: cover;
+    }
+
+    .provider-logo-upload {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 96px;
+        border: 2px dashed #d0dceb;
+        color: #8090a8;
+        text-align: center;
+    }
+
+    .provider-logo-upload-icon {
+        font-size: 1.2rem;
+        line-height: 1;
+    }
+
+    .provider-logo-upload strong {
+        margin-top: 6px;
+        font-size: 0.95rem;
+        color: #607089;
+    }
+
+    .provider-logo-upload span {
+        margin-top: 6px;
+        font-size: 0.82rem;
+    }
+
+    .provider-settings-input {
+        width: 100%;
+        min-height: 48px;
+        padding: 12px 14px;
+        border: 1px solid #d9e1ea;
+        color: #946949;
+        background: #fff;
+        outline: none;
+        font-family: inherit;
+    }
+
+    .provider-settings-textarea {
+        min-height: 78px;
+        resize: vertical;
+    }
+
+    .provider-settings-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+        padding: 0 18px;
+    }
+
+    .provider-settings-save,
+    .provider-settings-cancel {
+        height: 48px;
+        padding: 0 22px;
+        border-radius: 2px;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        font-weight: 800;
+        cursor: pointer;
+        font-family: inherit;
+    }
+
+    .provider-settings-save {
+        border: none;
+        background: #0b1739;
+        color: #fff;
+    }
+
+    .provider-settings-cancel {
+        border: 1px solid #d0d8e4;
+        background: #fff;
+        color: #6d4f32;
+    }
+
+    @@media (max-width: 960px) {
+        .provider-settings-shell {
+            grid-template-columns: 1fr;
+        }
+
+        .provider-sidebar {
+            border-right: none;
+            border-bottom: 1px solid #d9e1ea;
+        }
+    }
+
+    @@media (max-width: 720px) {
+        .provider-main {
+            padding-left: 12px;
+            padding-right: 12px;
+        }
+
+        .provider-logo-row {
+            grid-template-columns: 1fr;
+        }
+
+        .provider-settings-actions {
+            padding-left: 0;
+            padding-right: 0;
+            flex-wrap: wrap;
+        }
+    }
+</style>
+

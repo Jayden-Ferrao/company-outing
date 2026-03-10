@@ -1,6 +1,3 @@
 <Solution>
-  <Folder Name="/src/">
-    <Project Path="src/CompanyOuting.App.Client/CompanyOuting.App.Client.csproj" />
-    <Project Path="src/CompanyOuting.App/CompanyOuting.App.csproj" />
-  </Folder>
+  <Project Path="src/CompanyOuting.App/CompanyOuting.App.csproj" />
 </Solution>

@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     "net10.0": {
-      "Microsoft.AspNetCore.App.Internal.Assets/10.0.3": {
+      "Microsoft.AspNetCore.App.Internal.Assets/10.0.2": {
         "type": "package",
         "build": {
           "build/Microsoft.AspNetCore.App.Internal.Assets.props": {},
@@ -10,75 +10,6 @@
         },
         "buildMultiTargeting": {
           "buildMultiTargeting/Microsoft.AspNetCore.App.Internal.Assets.targets": {}
-        }
-      },
-      "Microsoft.AspNetCore.Components.WebAssembly/10.0.3": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.JSInterop.WebAssembly": "10.0.3"
-        },
-        "compile": {
-          "lib/net10.0/Microsoft.AspNetCore.Components.WebAssembly.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/net10.0/Microsoft.AspNetCore.Components.WebAssembly.dll": {
-            "related": ".xml"
-          }
-        },
-        "build": {
-          "build/net10.0/_._": {}
-        }
-      },
-      "Microsoft.AspNetCore.Components.WebAssembly.Server/10.0.3": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.AspNetCore.Components.WebAssembly": "10.0.3"
-        },
-        "compile": {
-          "lib/net10.0/Microsoft.AspNetCore.Components.WebAssembly.Server.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/net10.0/Microsoft.AspNetCore.Components.WebAssembly.Server.dll": {
-            "related": ".xml"
-          }
-        },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ],
-        "build": {
-          "build/Microsoft.AspNetCore.Components.WebAssembly.Server.targets": {}
-        }
-      },
-      "Microsoft.DotNet.HotReload.WebAssembly.Browser/10.0.103": {
-        "type": "package",
-        "compile": {
-          "lib/net10.0/Microsoft.DotNet.HotReload.WebAssembly.Browser.dll": {}
-        },
-        "runtime": {
-          "lib/net10.0/Microsoft.DotNet.HotReload.WebAssembly.Browser.dll": {}
-        },
-        "build": {
-          "buildTransitive/Microsoft.DotNet.HotReload.WebAssembly.Browser.props": {}
-        },
-        "buildMultiTargeting": {
-          "buildMultiTargeting/Microsoft.DotNet.HotReload.WebAssembly.Browser.props": {}
-        }
-      },
-      "Microsoft.JSInterop.WebAssembly/10.0.3": {
-        "type": "package",
-        "compile": {
-          "lib/net10.0/Microsoft.JSInterop.WebAssembly.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/net10.0/Microsoft.JSInterop.WebAssembly.dll": {
-            "related": ".xml"
-          }
         }
       },
       "MudBlazor/9.1.0": {
@@ -100,29 +31,14 @@
         "buildMultiTargeting": {
           "buildMultiTargeting/MudBlazor.props": {}
         }
-      },
-      "CompanyOuting.App.Client/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v10.0",
-        "dependencies": {
-          "Microsoft.AspNetCore.Components.WebAssembly": "10.0.3",
-          "Microsoft.DotNet.HotReload.WebAssembly.Browser": "10.0.103",
-          "MudBlazor": "9.1.0"
-        },
-        "compile": {
-          "bin/placeholder/CompanyOuting.App.Client.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/CompanyOuting.App.Client.dll": {}
-        }
       }
     }
   },
   "libraries": {
-    "Microsoft.AspNetCore.App.Internal.Assets/10.0.3": {
-      "sha512": "mr3Zn+ht8lijYvlMIasftw9opU9hsLKDdnOgQMmYI3RjWPJLOF9l8+YHDseRkTs97wOrULmJgo/NDCmzL/EGDg==",
+    "Microsoft.AspNetCore.App.Internal.Assets/10.0.2": {
+      "sha512": "fMAqrUm+aspxRAsCJ6Hlgs96XSHwNIr9HBNt7wyBAzQkPlfE7w+0C4NzDoJnso5YZyDI0VcRtEXxG9odt3KiZA==",
       "type": "package",
-      "path": "microsoft.aspnetcore.app.internal.assets/10.0.3",
+      "path": "microsoft.aspnetcore.app.internal.assets/10.0.2",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -138,89 +54,8 @@
         "build/Microsoft.AspNetCore.App.Internal.Assets.targets",
         "buildMultiTargeting/Microsoft.AspNetCore.App.Internal.Assets.targets",
         "buildTransitive/Microsoft.AspNetCore.App.Internal.Assets.targets",
-        "microsoft.aspnetcore.app.internal.assets.10.0.3.nupkg.sha512",
+        "microsoft.aspnetcore.app.internal.assets.10.0.2.nupkg.sha512",
         "microsoft.aspnetcore.app.internal.assets.nuspec"
-      ]
-    },
-    "Microsoft.AspNetCore.Components.WebAssembly/10.0.3": {
-      "sha512": "JZqlz8Swc6MYa+Zq52HcCYmgliy6wulJh9Oesv5eghnPFGLAPvVWTBEuTwdx90PKVj2exOY6XAnKpkwFPXvqwg==",
-      "type": "package",
-      "path": "microsoft.aspnetcore.components.webassembly/10.0.3",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "Icon.png",
-        "PACKAGE.md",
-        "THIRD-PARTY-NOTICES.txt",
-        "build/net10.0/Microsoft.AspNetCore.Components.WebAssembly.props",
-        "build/net10.0/blazor.webassembly.js",
-        "lib/net10.0/Microsoft.AspNetCore.Components.WebAssembly.dll",
-        "lib/net10.0/Microsoft.AspNetCore.Components.WebAssembly.xml",
-        "microsoft.aspnetcore.components.webassembly.10.0.3.nupkg.sha512",
-        "microsoft.aspnetcore.components.webassembly.nuspec"
-      ]
-    },
-    "Microsoft.AspNetCore.Components.WebAssembly.Server/10.0.3": {
-      "sha512": "LPfE2dIfSV+mY3BuRSHim197M0AufG84u/qaFy1s0A/MXqr6kyU/w928wSiEILVRqsQS9TdAFWlo0lDbl/slxg==",
-      "type": "package",
-      "path": "microsoft.aspnetcore.components.webassembly.server/10.0.3",
-      "hasTools": true,
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "Icon.png",
-        "PACKAGE.md",
-        "THIRD-PARTY-NOTICES.txt",
-        "build/Microsoft.AspNetCore.Components.WebAssembly.Server.targets",
-        "lib/net10.0/Microsoft.AspNetCore.Components.WebAssembly.Server.dll",
-        "lib/net10.0/Microsoft.AspNetCore.Components.WebAssembly.Server.xml",
-        "microsoft.aspnetcore.components.webassembly.server.10.0.3.nupkg.sha512",
-        "microsoft.aspnetcore.components.webassembly.server.nuspec",
-        "tools/BlazorDebugProxy/BrowserDebugHost.dll",
-        "tools/BlazorDebugProxy/BrowserDebugHost.runtimeconfig.json",
-        "tools/BlazorDebugProxy/BrowserDebugProxy.dll",
-        "tools/BlazorDebugProxy/Microsoft.CodeAnalysis.CSharp.Scripting.dll",
-        "tools/BlazorDebugProxy/Microsoft.CodeAnalysis.CSharp.dll",
-        "tools/BlazorDebugProxy/Microsoft.CodeAnalysis.Scripting.dll",
-        "tools/BlazorDebugProxy/Microsoft.CodeAnalysis.dll",
-        "tools/BlazorDebugProxy/Microsoft.FileFormats.dll",
-        "tools/BlazorDebugProxy/Microsoft.NET.WebAssembly.Webcil.dll",
-        "tools/BlazorDebugProxy/Microsoft.SymbolStore.dll",
-        "tools/BlazorDebugProxy/Newtonsoft.Json.dll"
-      ]
-    },
-    "Microsoft.DotNet.HotReload.WebAssembly.Browser/10.0.103": {
-      "sha512": "tIq6T4oyBMjxxxllslJu2fOJqEj8SOW29IfWqHYxubreOVlFWnxPN2PjDMuwoHjkrOnPKyuqoNcVYh5YOZcs0Q==",
-      "type": "package",
-      "path": "microsoft.dotnet.hotreload.webassembly.browser/10.0.103",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "Icon.png",
-        "build/Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
-        "build/Microsoft.AspNetCore.StaticWebAssets.props",
-        "build/Microsoft.DotNet.HotReload.WebAssembly.Browser.props",
-        "buildMultiTargeting/Microsoft.DotNet.HotReload.WebAssembly.Browser.props",
-        "buildTransitive/Microsoft.DotNet.HotReload.WebAssembly.Browser.props",
-        "lib/net10.0/Microsoft.DotNet.HotReload.WebAssembly.Browser.dll",
-        "microsoft.dotnet.hotreload.webassembly.browser.10.0.103.nupkg.sha512",
-        "microsoft.dotnet.hotreload.webassembly.browser.nuspec",
-        "staticwebassets/Microsoft.DotNet.HotReload.WebAssembly.Browser.99zm1jdh75.lib.module.js"
-      ]
-    },
-    "Microsoft.JSInterop.WebAssembly/10.0.3": {
-      "sha512": "/8RPiR0Aht+FSreYfoKNijr/m5RVMUPRti1zYt/slR6lz7j6hAjzeVar43MOby4euxXQc/16BZvG4GyVSkGonw==",
-      "type": "package",
-      "path": "microsoft.jsinterop.webassembly/10.0.3",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "Icon.png",
-        "THIRD-PARTY-NOTICES.txt",
-        "lib/net10.0/Microsoft.JSInterop.WebAssembly.dll",
-        "lib/net10.0/Microsoft.JSInterop.WebAssembly.xml",
-        "microsoft.jsinterop.webassembly.10.0.3.nupkg.sha512",
-        "microsoft.jsinterop.webassembly.nuspec"
       ]
     },
     "MudBlazor/9.1.0": {
@@ -253,50 +88,47 @@
         "staticwebassets/MudBlazor.min.js",
         "staticwebassets/MudBlazor.min.js.map"
       ]
-    },
-    "CompanyOuting.App.Client/1.0.0": {
-      "type": "project",
-      "path": "../CompanyOuting.App.Client/CompanyOuting.App.Client.csproj",
-      "msbuildProject": "../CompanyOuting.App.Client/CompanyOuting.App.Client.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net10.0": [
-      "CompanyOuting.App.Client >= 1.0.0",
-      "Microsoft.AspNetCore.App.Internal.Assets >= 10.0.3",
-      "Microsoft.AspNetCore.Components.WebAssembly.Server >= 10.0.3",
+      "Microsoft.AspNetCore.App.Internal.Assets >= 10.0.2",
       "MudBlazor >= 9.1.0"
     ]
   },
   "packageFolders": {
-    "/Users/jaydenkilowott/.nuget/packages/": {}
+    "C:\\Users\\Admin\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/jaydenkilowott/Desktop/company outing .net/company-outing/src/CompanyOuting.App/CompanyOuting.App.csproj",
+      "projectUniqueName": "D:\\Repos\\company-outing\\src\\CompanyOuting.App\\CompanyOuting.App.csproj",
       "projectName": "CompanyOuting.App",
-      "projectPath": "/Users/jaydenkilowott/Desktop/company outing .net/company-outing/src/CompanyOuting.App/CompanyOuting.App.csproj",
-      "packagesPath": "/Users/jaydenkilowott/.nuget/packages/",
-      "outputPath": "/Users/jaydenkilowott/Desktop/company outing .net/company-outing/src/CompanyOuting.App/obj/",
+      "projectPath": "D:\\Repos\\company-outing\\src\\CompanyOuting.App\\CompanyOuting.App.csproj",
+      "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+      "outputPath": "D:\\Repos\\company-outing\\src\\CompanyOuting.App\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "/Users/jaydenkilowott/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net10.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net10.0": {
           "targetAlias": "net10.0",
-          "projectReferences": {
-            "/Users/jaydenkilowott/Desktop/company outing .net/company-outing/src/CompanyOuting.App.Client/CompanyOuting.App.Client.csproj": {
-              "projectPath": "/Users/jaydenkilowott/Desktop/company outing .net/company-outing/src/CompanyOuting.App.Client/CompanyOuting.App.Client.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {
@@ -318,12 +150,8 @@
           "Microsoft.AspNetCore.App.Internal.Assets": {
             "suppressParent": "All",
             "target": "Package",
-            "version": "[10.0.3, )",
+            "version": "[10.0.2, )",
             "autoReferenced": true
-          },
-          "Microsoft.AspNetCore.Components.WebAssembly.Server": {
-            "target": "Package",
-            "version": "[10.0.3, )"
           },
           "MudBlazor": {
             "target": "Package",
@@ -349,7 +177,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.103/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.102/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.AspNetCore": "(,10.0.32767]",
           "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",

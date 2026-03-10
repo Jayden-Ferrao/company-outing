@@ -1,0 +1,37 @@
+@page "/marketplace"
+@page "/browse-experience"
+
+@using CompanyOuting.App.Components.BrowseSections
+
+<PageTitle>Browse Experiences</PageTitle>
+
+<BrowseHeroSection />
+<BrowseFilterBar />
+<div class="bp-body">
+    <div class="bp-sidebar">
+        <BrowseSidebarFilters />
+    </div>
+    <div class="bp-results">
+        <BrowseResultsGrid />
+    </div>
+</div>
+
+<style>
+    .bp-body {
+        display: flex;
+        gap: 40px;
+        max-width: 1280px;
+        margin: 40px auto 80px;
+        padding: 0 32px;
+    }
+
+    .bp-sidebar {
+        width: 240px;
+        flex-shrink: 0;
+    }
+
+    .bp-results {
+        flex: 1;
+        min-width: 0;
+    }
+</style>

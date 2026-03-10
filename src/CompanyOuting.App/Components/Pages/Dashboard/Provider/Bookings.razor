@@ -1,0 +1,462 @@
+@page "/dashboard/bookings"
+@page "/provider/bookings"
+@layout CompanyOuting.App.Components.Layout.ProviderLayout
+
+@inject IJSRuntime JsRuntime
+@inject NavigationManager Navigation
+@inject UserSessionService Session
+
+<PageTitle>Bookings Management - Company Outing</PageTitle>
+
+@if (_isReady)
+{
+    <div class="provider-bookings-page">
+        <div class="provider-bookings-shell">
+            <aside class="provider-sidebar">
+                <nav class="provider-sidebar-nav">
+                    @foreach (var item in _navItems)
+                    {
+                        <a href="@item.Href" class="provider-nav-link @(item.IsActive ? "is-active" : string.Empty)">
+                            <span class="provider-nav-icon">@item.Icon</span>
+                            <span>@item.Label</span>
+                        </a>
+                    }
+                </nav>
+            </aside>
+
+            <section class="provider-main">
+                <header class="provider-hero">
+                    <div>
+                        <h1>Bookings Management</h1>
+                        <p>Manage your booking requests and confirmations</p>
+                    </div>
+                </header>
+
+                <section class="provider-booking-stats">
+                    @foreach (var card in _statCards)
+                    {
+                        <article class="provider-booking-stat-card">
+                            <span>@card.Label</span>
+                            <strong>@card.Value</strong>
+                        </article>
+                    }
+                </section>
+
+                <section class="provider-panel">
+                    <div class="provider-booking-tabs">
+                        <a href="/dashboard/bookings" class="provider-booking-tab is-active">Pending (1)</a>
+                        <a href="/dashboard/bookings" class="provider-booking-tab">Confirmed (0)</a>
+                        <a href="/dashboard/bookings" class="provider-booking-tab">All Bookings (1)</a>
+                    </div>
+
+                    <article class="provider-booking-detail-card">
+                        <div class="provider-booking-detail-header">
+                            <div>
+                                <h2>Alpine Team Building Adventure</h2>
+                                <p>Booking ID: b1</p>
+                            </div>
+                            <span class="provider-booking-status">PENDING</span>
+                        </div>
+
+                        <div class="provider-booking-detail-grid">
+                            <div class="provider-booking-detail-column">
+                                <div class="provider-booking-detail-item">
+                                    <span>COMPANY</span>
+                                    <strong>TechCorp International</strong>
+                                </div>
+                                <div class="provider-booking-detail-item">
+                                    <span>CONTACT EMAIL</span>
+                                    <strong>sarah.johnson@techcorp.com</strong>
+                                </div>
+                                <div class="provider-booking-detail-item">
+                                    <span>GROUP SIZE</span>
+                                    <strong>45 people</strong>
+                                </div>
+                            </div>
+
+                            <div class="provider-booking-detail-column">
+                                <div class="provider-booking-detail-item">
+                                    <span>PREFERRED DATE</span>
+                                    <strong>2026-06-15</strong>
+                                </div>
+                                <div class="provider-booking-detail-item">
+                                    <span>TOTAL VALUE</span>
+                                    <strong>$38,250</strong>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="provider-booking-message">
+                            <span>MESSAGE</span>
+                            <p>Interested in this package for our mid-year team retreat. Need vegetarian meal options.</p>
+                        </div>
+
+                        <div class="provider-booking-cta-row">
+                            <button type="button" class="provider-confirm-btn">Confirm Booking</button>
+                            <button type="button" class="provider-decline-btn">Decline</button>
+                        </div>
+                    </article>
+                </section>
+            </section>
+        </div>
+    </div>
+}
+
+@code {
+    private bool _isReady;
+
+    private readonly List<DashboardNavItem> _navItems =
+    [
+        new("⌘", "Dashboard", "/dashboard", false),
+        new("◫", "My Packages", "/dashboard/packages", false),
+        new("☷", "Bookings", "/dashboard/bookings", true),
+        new("⚙", "Settings", "/dashboard/settings", false)
+    ];
+
+    private readonly List<BookingStat> _statCards =
+    [
+        new("PENDING", "1"),
+        new("CONFIRMED", "0"),
+        new("TOTAL BOOKINGS", "1")
+    ];
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+        {
+            return;
+        }
+
+        await Session.EnsureLoadedAsync(JsRuntime);
+
+        if (!Session.IsProvider)
+        {
+            Navigation.NavigateTo("/login");
+            return;
+        }
+
+        _isReady = true;
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private sealed record DashboardNavItem(string Icon, string Label, string Href, bool IsActive);
+    private sealed record BookingStat(string Label, string Value);
+}
+
+<style>
+    .provider-bookings-page {
+        background: #eef2f6;
+    }
+
+    .provider-bookings-shell {
+        display: grid;
+        grid-template-columns: 280px minmax(0, 1fr);
+        min-height: calc(100vh - 100px);
+    }
+
+    .provider-sidebar {
+        padding: 28px 0 32px;
+        background: #f9fbfc;
+        border-right: 1px solid #d9e1ea;
+    }
+
+    .provider-sidebar-nav {
+        display: flex;
+        flex-direction: column;
+        padding-top: 24px;
+    }
+
+    .provider-nav-link {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 18px 24px;
+        color: #5b6b84;
+        text-decoration: none;
+        font-size: 0.96rem;
+        font-weight: 800;
+        letter-spacing: 0.6px;
+    }
+
+    .provider-nav-link.is-active {
+        background: #eef2f7;
+        color: #0f172a;
+    }
+
+    .provider-nav-icon {
+        width: 22px;
+        text-align: center;
+        color: #64748b;
+    }
+
+    .provider-main {
+        padding-bottom: 48px;
+    }
+
+    .provider-toolbar {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        min-height: 82px;
+        padding: 18px 28px;
+        background: #ffffff;
+        border-bottom: 1px solid #d9e1ea;
+    }
+
+    .provider-toolbar-actions {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+    }
+
+    .provider-toolbar-primary,
+    .provider-toolbar-secondary,
+    .provider-confirm-btn,
+    .provider-decline-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        font-weight: 800;
+        font-family: inherit;
+    }
+
+    .provider-toolbar-primary,
+    .provider-confirm-btn {
+        height: 44px;
+        padding: 0 18px;
+        background: #0b1739;
+        color: #fff;
+        border: none;
+        border-radius: 2px;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        font-size: 0.8rem;
+    }
+
+    .provider-toolbar-secondary,
+    .provider-decline-btn {
+        height: 44px;
+        padding: 0 18px;
+        border: 1px solid #d0d8e4;
+        color: #24314f;
+        border-radius: 2px;
+        background: #fff;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        font-size: 0.8rem;
+        cursor: pointer;
+    }
+
+    .provider-toolbar-signout {
+        cursor: pointer;
+    }
+
+    .provider-hero,
+    .provider-panel {
+        margin: 24px 28px 0;
+        padding: 26px 24px;
+        background: #ffffff;
+        border: 1px solid #d9e1ea;
+    }
+
+    .provider-hero h1 {
+        margin: 0;
+        color: #0f172a;
+        font-size: clamp(2.5rem, 5vw, 3.5rem);
+        font-weight: 900;
+        letter-spacing: -1.5px;
+    }
+
+    .provider-hero p {
+        margin: 8px 0 0;
+        color: #607089;
+        font-size: 1rem;
+    }
+
+    .provider-booking-stats {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+        margin: 24px 28px 0;
+    }
+
+    .provider-booking-stat-card {
+        padding: 18px 18px 16px;
+        background: #ffffff;
+        border: 1px solid #d9e1ea;
+    }
+
+    .provider-booking-stat-card span {
+        display: block;
+        color: #70819a;
+        font-size: 0.78rem;
+        font-weight: 800;
+        letter-spacing: 1px;
+    }
+
+    .provider-booking-stat-card strong {
+        display: block;
+        margin-top: 10px;
+        color: #0f172a;
+        font-size: 2rem;
+        font-weight: 900;
+    }
+
+    .provider-booking-tabs {
+        display: flex;
+        gap: 28px;
+        margin-bottom: 24px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #d9e1ea;
+    }
+
+    .provider-booking-tab {
+        color: #8090a8;
+        text-decoration: none;
+        font-size: 0.88rem;
+        font-weight: 800;
+        letter-spacing: 0.4px;
+        text-transform: uppercase;
+    }
+
+    .provider-booking-tab.is-active {
+        color: #0f172a;
+        border-bottom: 2px solid #0f172a;
+        padding-bottom: 10px;
+        margin-bottom: -13px;
+    }
+
+    .provider-booking-detail-card {
+        padding: 18px;
+        border: 1px solid #d9e1ea;
+        background: #fcfdff;
+    }
+
+    .provider-booking-detail-header {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        align-items: flex-start;
+        margin-bottom: 20px;
+    }
+
+    .provider-booking-detail-header h2 {
+        margin: 0;
+        color: #172033;
+        font-size: 1.35rem;
+        font-weight: 800;
+    }
+
+    .provider-booking-detail-header p {
+        margin: 6px 0 0;
+        color: #7a889d;
+        font-size: 0.88rem;
+    }
+
+    .provider-booking-status {
+        padding: 8px 14px;
+        background: #f8edd2;
+        color: #a16207;
+        font-size: 0.75rem;
+        font-weight: 800;
+        letter-spacing: 0.8px;
+    }
+
+    .provider-booking-detail-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 24px;
+        margin-bottom: 20px;
+    }
+
+    .provider-booking-detail-column {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .provider-booking-detail-item span,
+    .provider-booking-message span {
+        display: block;
+        margin-bottom: 6px;
+        color: #70819a;
+        font-size: 0.76rem;
+        font-weight: 800;
+        letter-spacing: 1px;
+    }
+
+    .provider-booking-detail-item strong {
+        color: #172033;
+        font-size: 1rem;
+    }
+
+    .provider-booking-message {
+        margin-bottom: 18px;
+        padding: 16px 14px;
+        border: 1px solid #d9e1ea;
+        background: #f6f8fb;
+    }
+
+    .provider-booking-message p {
+        margin: 0;
+        color: #607089;
+        line-height: 1.6;
+    }
+
+    .provider-booking-cta-row {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .provider-confirm-btn,
+    .provider-decline-btn {
+        width: 100%;
+    }
+
+    .provider-decline-btn {
+        color: #ef4444;
+        border-color: #f5c2c7;
+        background: #fff;
+    }
+
+    @@media (max-width: 960px) {
+        .provider-bookings-shell {
+            grid-template-columns: 1fr;
+        }
+
+        .provider-sidebar {
+            border-right: none;
+            border-bottom: 1px solid #d9e1ea;
+        }
+    }
+
+    @@media (max-width: 720px) {
+        .provider-toolbar,
+        .provider-hero,
+        .provider-panel {
+            margin-left: 16px;
+            margin-right: 16px;
+            padding: 20px;
+        }
+
+        .provider-booking-stats {
+            grid-template-columns: 1fr;
+            margin-left: 16px;
+            margin-right: 16px;
+        }
+
+        .provider-booking-detail-grid,
+        .provider-booking-cta-row {
+            grid-template-columns: 1fr;
+        }
+
+        .provider-booking-detail-header,
+        .provider-toolbar-actions,
+        .provider-booking-tabs {
+            flex-wrap: wrap;
+        }
+    }
+</style>
+

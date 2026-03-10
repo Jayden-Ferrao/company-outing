@@ -1,0 +1,27 @@
+@page "/about"
+@using MudBlazor
+@using CompanyOuting.App.Components.AboutSections
+
+<PageTitle>About Us - Company Outing</PageTitle>
+
+<div class="about-page">
+    <AboutHeroSection />
+    
+    <MudContainer MaxWidth="MaxWidth.Large" Class="px-12">
+        <AboutIntroSection />
+    </MudContainer>
+
+    <div style="background-color: #FAFAFA; width: 100vw; margin-left: calc(-50vw + 50%); margin-right: calc(-50vw + 50%);">
+        <MudContainer MaxWidth="MaxWidth.Large" Class="px-12">
+            <AboutFeaturesSection />
+        </MudContainer>
+    </div>
+
+    <MudContainer MaxWidth="MaxWidth.Large" Class="px-12">
+        <AboutTeamSection />
+    </MudContainer>
+
+    <AboutStatsSection />
+
+    <AboutCtaSection />
+</div>
