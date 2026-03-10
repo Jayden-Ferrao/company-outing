@@ -22,13 +22,13 @@
         </div>
     </MudLink>
     
+    <MudSpacer />
+
     @* Navigation Links *@
-    <div class="d-none d-lg-flex gap-10 align-center">
+    <div class="d-none d-lg-flex gap-10 align-center nav-links-wrap">
         <MudLink Href="/about" Class="nav-item-link">ABOUT</MudLink>
         <MudLink Href="/marketplace" Class="nav-item-link">BROWSE EXPERIENCES</MudLink>
     </div>
-
-    <MudSpacer />
 
     @* Action Buttons *@
     <div class="d-flex gap-4 align-center">
@@ -140,6 +140,10 @@
         color: #111827 !important;
         letter-spacing: 0.5px !important;
         text-decoration: none !important;
+    }
+
+    .nav-links-wrap {
+        margin-right: 36px;
     }
 
     .nav-item-link:hover {
