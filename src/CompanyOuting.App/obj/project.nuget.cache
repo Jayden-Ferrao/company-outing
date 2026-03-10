@@ -7,15 +7,5 @@
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.app.internal.assets\\10.0.2\\microsoft.aspnetcore.app.internal.assets.10.0.2.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\mudblazor\\9.1.0\\mudblazor.9.1.0.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "message": "Problem reading the cache file D:\\Repos\\company-outing\\src\\CompanyOuting.App\\obj\\project.nuget.cache : '<' is an invalid start of a property name. Expected a '\"'. Path: $ | LineNumber: 2 | BytePositionInLine: 0.",
-      "projectPath": "D:\\Repos\\company-outing\\src\\CompanyOuting.App\\CompanyOuting.App.csproj",
-      "warningLevel": 1,
-      "filePath": "D:\\Repos\\company-outing\\src\\CompanyOuting.App\\CompanyOuting.App.csproj",
-      "targetGraphs": []
-    }
-  ]
+  "logs": []
 }
