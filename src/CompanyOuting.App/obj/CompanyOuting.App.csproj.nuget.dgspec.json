@@ -1,25 +1,32 @@
 {
   "format": 1,
   "restore": {
-    "/Users/jaydenkilowott/Desktop/company outing .net/company-outing/src/CompanyOuting.App/CompanyOuting.App.csproj": {}
+    "D:\\Repos\\company-outing\\src\\CompanyOuting.App\\CompanyOuting.App.csproj": {}
   },
   "projects": {
-    "/Users/jaydenkilowott/Desktop/company outing .net/company-outing/src/CompanyOuting.App.Client/CompanyOuting.App.Client.csproj": {
+    "D:\\Repos\\company-outing\\src\\CompanyOuting.App.Client\\CompanyOuting.App.Client.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/jaydenkilowott/Desktop/company outing .net/company-outing/src/CompanyOuting.App.Client/CompanyOuting.App.Client.csproj",
+        "projectUniqueName": "D:\\Repos\\company-outing\\src\\CompanyOuting.App.Client\\CompanyOuting.App.Client.csproj",
         "projectName": "CompanyOuting.App.Client",
-        "projectPath": "/Users/jaydenkilowott/Desktop/company outing .net/company-outing/src/CompanyOuting.App.Client/CompanyOuting.App.Client.csproj",
-        "packagesPath": "/Users/jaydenkilowott/.nuget/packages/",
-        "outputPath": "/Users/jaydenkilowott/Desktop/company outing .net/company-outing/src/CompanyOuting.App.Client/obj/",
+        "projectPath": "D:\\Repos\\company-outing\\src\\CompanyOuting.App.Client\\CompanyOuting.App.Client.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "D:\\Repos\\company-outing\\src\\CompanyOuting.App.Client\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/Users/jaydenkilowott/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -47,7 +54,7 @@
             "Microsoft.AspNetCore.App.Internal.Assets": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[10.0.3, )",
+              "version": "[10.0.2, )",
               "autoReferenced": true
             },
             "Microsoft.AspNetCore.Components.WebAssembly": {
@@ -56,19 +63,19 @@
             },
             "Microsoft.DotNet.HotReload.WebAssembly.Browser": {
               "target": "Package",
-              "version": "[10.0.103, )",
+              "version": "[10.0.102, )",
               "autoReferenced": true
             },
             "Microsoft.NET.ILLink.Tasks": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[10.0.3, )",
+              "version": "[10.0.2, )",
               "autoReferenced": true
             },
             "Microsoft.NET.Sdk.WebAssembly.Pack": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[10.0.3, )",
+              "version": "[10.0.2, )",
               "autoReferenced": true
             },
             "MudBlazor": {
@@ -90,7 +97,7 @@
           "downloadDependencies": [
             {
               "name": "Microsoft.NETCore.App.Runtime.Mono.browser-wasm",
-              "version": "[10.0.3, 10.0.3]"
+              "version": "[10.0.2, 10.0.2]"
             }
           ],
           "frameworkReferences": {
@@ -98,7 +105,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.103/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.102/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
@@ -381,30 +388,37 @@
         }
       }
     },
-    "/Users/jaydenkilowott/Desktop/company outing .net/company-outing/src/CompanyOuting.App/CompanyOuting.App.csproj": {
+    "D:\\Repos\\company-outing\\src\\CompanyOuting.App\\CompanyOuting.App.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/jaydenkilowott/Desktop/company outing .net/company-outing/src/CompanyOuting.App/CompanyOuting.App.csproj",
+        "projectUniqueName": "D:\\Repos\\company-outing\\src\\CompanyOuting.App\\CompanyOuting.App.csproj",
         "projectName": "CompanyOuting.App",
-        "projectPath": "/Users/jaydenkilowott/Desktop/company outing .net/company-outing/src/CompanyOuting.App/CompanyOuting.App.csproj",
-        "packagesPath": "/Users/jaydenkilowott/.nuget/packages/",
-        "outputPath": "/Users/jaydenkilowott/Desktop/company outing .net/company-outing/src/CompanyOuting.App/obj/",
+        "projectPath": "D:\\Repos\\company-outing\\src\\CompanyOuting.App\\CompanyOuting.App.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "D:\\Repos\\company-outing\\src\\CompanyOuting.App\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/Users/jaydenkilowott/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net10.0": {
             "targetAlias": "net10.0",
             "projectReferences": {
-              "/Users/jaydenkilowott/Desktop/company outing .net/company-outing/src/CompanyOuting.App.Client/CompanyOuting.App.Client.csproj": {
-                "projectPath": "/Users/jaydenkilowott/Desktop/company outing .net/company-outing/src/CompanyOuting.App.Client/CompanyOuting.App.Client.csproj"
+              "D:\\Repos\\company-outing\\src\\CompanyOuting.App.Client\\CompanyOuting.App.Client.csproj": {
+                "projectPath": "D:\\Repos\\company-outing\\src\\CompanyOuting.App.Client\\CompanyOuting.App.Client.csproj"
               }
             }
           }
@@ -428,7 +442,7 @@
             "Microsoft.AspNetCore.App.Internal.Assets": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[10.0.3, )",
+              "version": "[10.0.2, )",
               "autoReferenced": true
             },
             "Microsoft.AspNetCore.Components.WebAssembly.Server": {
@@ -459,7 +473,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.103/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.102/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.AspNetCore": "(,10.0.32767]",
             "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",
